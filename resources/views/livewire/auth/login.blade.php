@@ -17,11 +17,11 @@
             </div>
 
             <!-- Form Login -->
-            <form class="space-y-4">
+            <form wire:submit.prevent='login' class="space-y-4">
                 <div>
-                    <label for="email"
-                        class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-                    <flux:input icon="user" type="text" required placeholder="Masukkan NIM" />
+                    <label for="nim"
+                        class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">NIM</label>
+                    <flux:input wire:model="nim" icon="user" type="text" required placeholder="Masukkan NIM" />
                 </div>
 
                 <div>
@@ -32,11 +32,11 @@
                             class="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Lupa
                             password?</a>
                     </div>
-                    <flux:input icon="key" viewable type="password" required placeholder="Masukkan password anda" />
+                    <flux:input wire:model="password" icon="key" viewable type="password" required placeholder="Masukkan password anda" />
                 </div>
 
                 <div class="flex items-center">
-                    <input type="checkbox" id="remember"
+                    <input wire:model="remember" type="checkbox" id="remember"
                         class="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-500 focus:ring-indigo-500 dark:focus:ring-indigo-600 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800">
                     <label for="remember" class="ml-2 block text-xs text-gray-700 dark:text-gray-300">Ingat saya</label>
                 </div>

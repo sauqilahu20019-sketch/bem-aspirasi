@@ -8,7 +8,10 @@
                 </a>
                 <div class="flex items-center lg:order-2">
                     @if (Auth::user())
-                        <flux:button href="{{ route('logout') }}" variant="danger" size='sm'>Logout</flux:button>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <flux:button type="submmit" variant="danger" size='sm'>Logout</flux:button>
+                    </form>
                     @else
                         <flux:button href="{{ route('login') }}" variant="primary" color="indigo" size='sm'>Log In</flux:button>
                     @endif

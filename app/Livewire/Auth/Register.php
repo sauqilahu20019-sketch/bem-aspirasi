@@ -13,9 +13,13 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Register extends Component
 {
-    public string $name = '';
+    public string $initial_name = '';
 
-    public string $email = '';
+    public string $last_name = '';
+
+    public string $nim = '';
+
+    public string $prodi = '';
 
     public string $password = '';
 
@@ -26,12 +30,21 @@ class Register extends Component
      */
     public function register(): void
     {
+        // dd("Hello");
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'initial_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['string', 'max:255'],
+            'nim' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'prodi' => ['required', 'string'],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        if($this->last_name){
+            $validated['full_name'] = $validated['initial_name'] . " " . $validated['last_name'];
+        } else {
+            $validated['full_name'] = $validated['initial_name'];
+        }
+        $validated['role_id'] = 7;
         $validated['password'] = Hash::make($validated['password']);
 
         event(new Registered(($user = User::create($validated))));

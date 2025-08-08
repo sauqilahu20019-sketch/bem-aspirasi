@@ -10,17 +10,17 @@ use Livewire\Component;
 
 class Profile extends Component
 {
-    public string $name = '';
+    public string $full_name = '';
 
-    public string $email = '';
+    public string $nim = '';
 
     /**
      * Mount the component.
      */
     public function mount(): void
     {
-        $this->name = Auth::user()->name;
-        $this->email = Auth::user()->email;
+        $this->full_name = Auth::user()->full_name;
+        $this->nim = Auth::user()->nim;
     }
 
     /**
@@ -31,27 +31,27 @@ class Profile extends Component
         $user = Auth::user();
 
         $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'full_name' => ['required', 'string', 'max:255'],
 
-            'email' => [
+            'nim' => [
                 'required',
                 'string',
                 'lowercase',
-                'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($user->id),
+                'nim',
+                Rule::unique(User::class)->ignore($user->id_user),
             ],
         ]);
 
         $user->fill($validated);
 
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
+        // if ($user->isDirty('email')) {
+        //     $user->email_verified_at = null;
+        // }
 
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        $this->dispatch('profile-updated', full_name: $user->full_name);
     }
 
     /**

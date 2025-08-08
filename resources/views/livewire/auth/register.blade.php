@@ -34,40 +34,40 @@
             </div>
 
             <!-- Form Daftar -->
-            <form class="space-y-4">
+            <form wire:submit="register" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Nama
                             Depan</label>
-                        <flux:input icon="user" type="text" required placeholder="Nama depan" />
+                        <flux:input :invalid="$errors->has('initial_name')"  wire:model="initial_name" icon="user" type="text" required placeholder="Nama depan" />
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Nama
                             Belakang</label>
-                        <flux:input type="text" placeholder="Nama belakang (opsional)" />
+                        <flux:input wire:model="last_name" :invalid="$errors->has('last_name')" type="text" placeholder="Nama belakang (opsional)" />
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">NIM</label>
-                    <flux:input icon="credit-card" type="text" required placeholder="Nomor Induk Mahasiswa" />
+                    <flux:input wire:model="nim" :invalid="$errors->has('nim')" icon="credit-card" type="text" required placeholder="Nomor Induk Mahasiswa" />
                 </div>
 
                 <div>
-                    <flux:select :invalid="$errors->has('area')" placeholder="Program Studi">
+                    <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
                         <flux:select.option value="teknologi  informasi">Teknologi Informasi</flux:select.option>
                     </flux:select>
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
-                    <flux:input icon="key" viewable type="password" required placeholder="Minimal 8 karakter" />
+                    <flux:input wire:model="password" :invalid="$errors->has('password')"  icon="key" viewable type="password" required placeholder="Minimal 8 karakter" />
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Konfirmasi
                         Password</label>
-                    <flux:input icon="key" viewable type="password" required placeholder="Ulangi password anda" />
+                    <flux:input wire:model="password_confirmation" :invalid="$errors->has('password_confirmation')" icon="key" viewable type="password" required placeholder="Ulangi password anda" />
                 </div>
 
                 <div class="flex items-center">
