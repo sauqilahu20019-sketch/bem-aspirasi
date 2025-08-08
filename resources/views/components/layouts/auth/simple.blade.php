@@ -5,10 +5,7 @@
     </head>
     <body>
         {{ $slot }}
-        {{-- <div>
-            {{-- <div class="w-full">
-            </div> --}}
-        {{-- </div> --}}
         @fluxScripts
     </body>
+    @stack('script')
 </html>

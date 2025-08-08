@@ -1,184 +1,179 @@
-
-<div class="w-full bg-white flex">
+<div class="min-h-screen flex flex-col md:flex-row bg-white dark:bg-gray-900">
     <!-- Container 1: Form Login -->
-    <div class="w-full flex items-center justify-center p-12">
-        <div class="w-full max-w-md">
+    <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
+        <div class="w-full max-w-md space-y-6">
             <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex flex-col items-center gap-2 font-medium" wire:navigate>
-                <span class="flex h-9 w-9 mb-1 items-center justify-center rounded-md">
-                    <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
+            <a href="{{ route('home') }}" class="flex flex-col items-center gap-1 font-medium" wire:navigate>
+                <span class="flex h-8 w-8 items-center justify-center rounded-md">
+                    <x-app-logo-icon class="size-7 fill-current text-black dark:text-white" />
                 </span>
-                <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
+                <span class="text-sm text-gray-600 dark:text-gray-400">{{ config('app.name', 'Laravel') }}</span>
             </a>
 
             <!-- Judul -->
-            <h1 class="text-3xl font-bold text-gray-900 mb-2 text-center">Selamat Datang</h1>
-            <p class="text-gray-500 mb-8 text-center">Masuk untuk mengakses dashboard Anda</p>
+            <div class="text-center">
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">Selamat Datang</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Masuk untuk mengakses dashboard Anda</p>
+            </div>
 
             <!-- Form Login -->
-            <form class="space-y-6">
+            <form class="space-y-4">
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="email"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                        placeholder="email@contoh.com">
+                    <label for="email"
+                        class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                    <flux:input icon="user" type="text" required placeholder="Masukkan NIM" />
                 </div>
 
                 <div>
                     <div class="flex justify-between mb-1">
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500">Lupa password?</a>
+                        <label for="password"
+                            class="block text-xs font-medium text-gray-700 dark:text-gray-300">Password</label>
+                        <a href="#"
+                            class="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Lupa
+                            password?</a>
                     </div>
-                    <input type="password" id="password"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
-                        placeholder="Masukkan password">
+                    <flux:input icon="key" viewable type="password" required placeholder="Masukkan password anda" />
                 </div>
 
                 <div class="flex items-center">
                     <input type="checkbox" id="remember"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                    <label for="remember" class="ml-2 block text-sm text-gray-700">Ingat saya</label>
+                        class="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-500 focus:ring-indigo-500 dark:focus:ring-indigo-600 border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-800">
+                    <label for="remember" class="ml-2 block text-xs text-gray-700 dark:text-gray-300">Ingat saya</label>
                 </div>
 
                 <button type="submit"
-                    class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200">
+                    class="w-full py-2 px-4 text-sm bg-indigo-600 dark:bg-indigo-700 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 transition duration-200">
                     Masuk
                 </button>
             </form>
 
-            <div class="mt-6 text-center text-sm text-gray-500">
-                Belum punya akun? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Daftar
+            <div
+                class="pt-4 text-center text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
+                Belum punya akun? <a href="{{ route('register') }}"
+                    class="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Daftar
                     sekarang</a>
             </div>
         </div>
     </div>
 
-    <!-- Container 2: Ilustrasi SVG Animasi -->
-    <div class="w-full bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-12">
-        <div class="relative w-full h-full max-w-xl">
-            <!-- SVG Illustration -->
-            <svg class="w-full h-auto" viewBox="0 0 600 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Background Circles -->
-                <circle cx="450" cy="100" r="60" fill="#818CF8" fill-opacity="0.2"
-                    class="animate-float-slow" />
-                <circle cx="150" cy="400" r="80" fill="#A78BFA" fill-opacity="0.2"
-                    class="animate-float-slower" />
+    <div
+        class="w-full md:w-1/2 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/30 flex items-center justify-center relative overflow-hidden">
 
-                <!-- Main Illustration -->
-                <g class="animate-float">
-                    <path
-                        d="M300 150C300 206.228 253.228 253 197 253C140.772 253 94 206.228 94 150C94 93.7715 140.772 47 197 47C253.228 47 300 93.7715 300 150Z"
-                        fill="#6366F1" />
-                    <path
-                        d="M197 121C209.15 121 219 111.15 219 99C219 86.8497 209.15 77 197 77C184.85 77 175 86.8497 175 99C175 111.15 184.85 121 197 121Z"
-                        fill="white" />
-                    <path
-                        d="M197 173C216.33 173 232 157.33 232 138C232 118.67 216.33 103 197 103C177.67 103 162 118.67 162 138C162 157.33 177.67 173 197 173Z"
-                        fill="white" />
-                </g>
+        <div class="relative text-center max-w-lg">
+            <!-- Animated Welcome Text -->
+            <h1 class="text-xl md:text-2xl font-bold text-indigo-800 dark:text-indigo-100 leading-snug">
+                <span id="typing-title" class="relative inline-block">
+                    <span
+                        class="absolute top-0 w-0.5 h-6 bg-indigo-600 dark:bg-indigo-300 animate-pulse"></span>
+                </span>
+            </h1>
 
-                <!-- Lock Icon -->
-                <g transform="translate(200, 250)" class="animate-bounce">
-                    <rect x="50" y="80" width="100" height="120" rx="10" fill="#4F46E5" />
-                    <rect x="70" y="30" width="60" height="50" rx="5" fill="#4F46E5" />
-                    <circle cx="100" cy="140" r="20" fill="#A78BFA" />
-                </g>
-
-                <!-- Document Icon -->
-                <g transform="translate(350, 300)" class="animate-pulse">
-                    <path d="M80 40H140L160 60V160H80V40Z" fill="#8B5CF6" stroke="#6D28D9" stroke-width="2" />
-                    <path d="M140 40V60H160" stroke="#6D28D9" stroke-width="2" fill="none" />
-                    <line x1="90" y1="80" x2="150" y2="80" stroke="white" stroke-width="2" />
-                    <line x1="90" y1="100" x2="150" y2="100" stroke="white" stroke-width="2" />
-                    <line x1="90" y1="120" x2="130" y2="120" stroke="white" stroke-width="2" />
-                </g>
-            </svg>
+            <!-- Animated Subtitle -->
+            <h3 class="text-sm md:text-base text-indigo-600 dark:text-indigo-300/90 font-medium">
+                <span id="typing-subtitle" class="opacity-0"></span>
+            </h3>
         </div>
     </div>
 </div>
+@push('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const titleText = "Welcome to BEM-KM Universitas Annuqayah";
+            const subtitleText = "Sistem Informasi Pengajuan Aspirasi Mahasiswa";
+
+            // Clear existing content and add cursor
+            const titleElement = document.getElementById('typing-title');
+            titleElement.innerHTML = '<span class="typing-cursor">|</span>';
+
+            // Type title
+            let i = 0;
+            const typeTitle = () => {
+                if (i < titleText.length) {
+                    // Insert character before cursor
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = titleText.charAt(i);
+                    charSpan.className = 'typed-char';
+
+                    const cursor = titleElement.querySelector('.typing-cursor');
+                    titleElement.insertBefore(charSpan, cursor);
+
+                    i++;
+                    setTimeout(typeTitle, 100);
+                } else {
+                    // When title finishes, start subtitle
+                    setTimeout(() => {
+                        document.getElementById('typing-subtitle').classList.remove('opacity-0');
+                        const subtitleElement = document.getElementById('typing-subtitle');
+                        subtitleElement.innerHTML = '<span class="typing-cursor">|</span>';
+
+                        let j = 0;
+                        const typeSubtitle = () => {
+                            if (j < subtitleText.length) {
+                                // Insert character before cursor
+                                const charSpan = document.createElement('span');
+                                charSpan.textContent = subtitleText.charAt(j);
+                                charSpan.className = 'typed-char';
+
+                                const cursor = subtitleElement.querySelector('.typing-cursor');
+                                subtitleElement.insertBefore(charSpan, cursor);
+
+                                j++;
+                                setTimeout(typeSubtitle, 50);
+                            } else {
+                                // Remove cursor when done
+                                const cursor = subtitleElement.querySelector('.typing-cursor');
+                                if (cursor) cursor.remove();
+                            }
+                        };
+                        typeSubtitle();
+                    }, 500);
+
+                    // Remove title cursor when moving to subtitle
+                    const titleCursor = titleElement.querySelector('.typing-cursor');
+                    if (titleCursor) titleCursor.remove();
+                }
+            };
+            setTimeout(typeTitle, 500);
+        });
+    </script>
+@endpush
 
 @push('styles')
     <style>
-        @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
+        .typing-cursor {
+            display: inline-block;
+            animation: blink 1s step-end infinite;
+            color: #4f46e5;
+            /* indigo-600 */
         }
 
-        @keyframes float-slow {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes float-slower {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(15px);
-            }
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-15px);
-            }
-        }
-
-        @keyframes pulse {
+        @keyframes blink {
 
             0%,
             100% {
                 opacity: 1;
-                transform: scale(1);
             }
 
             50% {
-                opacity: 0.8;
-                transform: scale(0.98);
+                opacity: 0;
             }
         }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .typed-char {
+            display: inline-block;
+            animation: pop-in 0.1s ease-out;
         }
 
-        .animate-float-slow {
-            animation: float-slow 8s ease-in-out infinite;
-        }
+        @keyframes pop-in {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
 
-        .animate-float-slower {
-            animation: float-slower 10s ease-in-out infinite;
-        }
-
-        .animate-bounce {
-            animation: bounce 4s ease-in-out infinite;
-        }
-
-        .animate-pulse {
-            animation: pulse 3s ease-in-out infinite;
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
     </style>
 @endpush
