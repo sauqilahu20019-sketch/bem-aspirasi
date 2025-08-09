@@ -7,6 +7,7 @@
                 wire:model="current_password"
                 :label="__('Current password')"
                 type="password"
+                viewable
                 required
                 autocomplete="current-password"
             />
@@ -15,6 +16,7 @@
                 :label="__('New password')"
                 type="password"
                 required
+                viewable
                 autocomplete="new-password"
             />
             <flux:input
@@ -22,6 +24,7 @@
                 :label="__('Confirm Password')"
                 type="password"
                 required
+                viewable
                 autocomplete="new-password"
             />
 

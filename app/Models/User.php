@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -56,7 +57,7 @@ class User extends Authenticatable
      */
     public function initials(): string
     {
-        return Str::of($this->name)
+        return Str::of($this->full_name)
             ->explode(' ')
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
@@ -66,5 +67,15 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id', 'id_role');
+    }
+
+    public function aspirasiSaya(): HasMany
+    {
+        return $this->hasMany(Aspirasi::class, 'diajukan_oleh', 'id_user');
+    }
+
+    public function aspirasiKeSaya(): HasMany
+    {
+        return $this->hasMany(Aspirasi::class, 'ditujukan_ke', 'id_user');
     }
 }

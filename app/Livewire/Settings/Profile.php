@@ -14,6 +14,7 @@ class Profile extends Component
 
     public string $nim = '';
 
+    public string $prodi = '';
     /**
      * Mount the component.
      */
@@ -21,6 +22,7 @@ class Profile extends Component
     {
         $this->full_name = Auth::user()->full_name;
         $this->nim = Auth::user()->nim;
+        $this->prodi = Auth::user()->prodi;
     }
 
     /**
@@ -29,18 +31,16 @@ class Profile extends Component
     public function updateProfileInformation(): void
     {
         $user = Auth::user();
-
         $validated = $this->validate([
             'full_name' => ['required', 'string', 'max:255'],
 
             'nim' => [
                 'required',
                 'string',
-                'lowercase',
                 'max:255',
-                'nim',
-                Rule::unique(User::class)->ignore($user->id_user),
+                Rule::unique(User::class)->ignore($user->id_user, 'id_user'),
             ],
+            'prodi' => ['required', 'string']
         ]);
 
         $user->fill($validated);

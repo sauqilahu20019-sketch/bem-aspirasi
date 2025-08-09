@@ -44,8 +44,6 @@ class Register extends Component
                     ->letters()
                     ->mixedCase()
                     ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
             ],
         ], [
             'initial_name.required' => 'Nama Depan harus diisi!',
@@ -63,9 +61,6 @@ class Register extends Component
             'password.customMessages.min' => 'Password minimal 8 karakter!',
             'password.letters' => 'Password harus mengandung huruf!',
             'password.mixedCase' => 'Password harus mengandung huruf besar dan kecil!',
-            'password.numbers' => 'Password harus mengandung angka!',
-            'password.symbols' => 'Password harus mengandung simbol!',
-            'password.uncompromised' => 'Password terlalu umum atau mudah ditebak!',
         ]);
 
         if ($this->last_name) {

@@ -3,12 +3,13 @@
 
     <x-settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="full_name" :label="__('Nama Lengkap')" type="text" required autofocus autocomplete="full_name" />
+            <flux:input wire:model="full_name" :label="__('Nama Lengkap')" type="text" required autofocus
+                autocomplete="full_name" />
 
             <div>
                 <flux:input wire:model="nim" :label="__('NIM')" type="text" required autocomplete="nim" />
 
-                {{-- @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
+                {{-- @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !auth()->user()->hasVerifiedEmail())
                     <div>
                         <flux:text class="mt-4">
                             {{ __('Your email address is unverified.') }}
@@ -25,6 +26,13 @@
                         @endif
                     </div>
                 @endif --}}
+            </div>
+            <div>
+                <flux:select :label="__('Program Studi')" wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
+                    <flux:select.option value="Teknik Hasil Pertanian">Teknik Hasil Pertanian</flux:select.option>
+                    <flux:select.option value="Teknologi  Informasi">Teknologi Informasi</flux:select.option>
+                    <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
+                </flux:select>
             </div>
 
             <div class="flex items-center gap-4">
