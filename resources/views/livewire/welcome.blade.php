@@ -3,8 +3,8 @@
         <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
             <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
                 <a href="#" class="flex items-center">
-                    <img src="{{ asset('assets/images/logo.svg') }}" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Landwind</span>
+                    <img src="{{ asset('assets/images/logo.png') }}" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
+                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BEM-KM UA</span>
                 </a>
                 <div class="flex items-center lg:order-2">
                     @if (Auth::user())

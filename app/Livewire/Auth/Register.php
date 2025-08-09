@@ -34,12 +34,41 @@ class Register extends Component
         $validated = $this->validate([
             'initial_name' => ['required', 'string', 'max:255'],
             'last_name' => ['string', 'max:255'],
-            'nim' => ['required', 'string', 'max:255', 'unique:'.User::class],
+            'nim' => ['required', 'string', 'max:255', 'unique:' . User::class],
             'prodi' => ['required', 'string'],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required',
+                'confirmed',
+                Rules\Password::defaults()
+                    ->min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+        ], [
+            'initial_name.required' => 'Nama Depan harus diisi!',
+            'initial_name.string' => 'Nama Depan harus berupa text!',
+            'initial_name.max' => 'Max. Nama Depan 255 karakter',
+            'last_name.string' => 'Nama belakang harus berupa text',
+            'nim.required' => 'NIM harus diisi!',
+            'nim.string' => 'NIM harus berupa text!',
+            'nim.max' => 'Max. NIM 255 karakter!',
+            'nim.unique' => 'NIM sudah digunakan!',
+            'prodi.required' => 'Prodi harus diisi!',
+            'prodi.string' => 'Harap memilih pilihan yang sudah disediakan!',
+            'password.required' => 'Password harus diisi!',
+            'password.confirmed' => 'Konfirmasi password tidak sesuai!',
+            'password.customMessages.min' => 'Password minimal 8 karakter!',
+            'password.letters' => 'Password harus mengandung huruf!',
+            'password.mixedCase' => 'Password harus mengandung huruf besar dan kecil!',
+            'password.numbers' => 'Password harus mengandung angka!',
+            'password.symbols' => 'Password harus mengandung simbol!',
+            'password.uncompromised' => 'Password terlalu umum atau mudah ditebak!',
         ]);
 
-        if($this->last_name){
+        if ($this->last_name) {
             $validated['full_name'] = $validated['initial_name'] . " " . $validated['last_name'];
         } else {
             $validated['full_name'] = $validated['initial_name'];

@@ -1,19 +1,18 @@
 <div class="min-h-screen flex flex-col md:flex-row bg-white dark:bg-gray-900">
     <!-- Container 1: Form Login -->
     <div class="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12">
-        <div class="w-full max-w-md space-y-6">
+        <div class="w-full max-w-md">
             <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex flex-col items-center gap-1 font-medium" wire:navigate>
-                <span class="flex h-8 w-8 items-center justify-center rounded-md">
-                    <x-app-logo-icon class="size-7 fill-current text-black dark:text-white" />
+            <a href="{{ route('home') }}" class="mb-5 flex flex-col items-center gap-1 font-medium" wire:navigate>
+                <span class="flex p-4 rounded-md items-center justify-center bg-gray-50 dark:bg-white ">
+                    <x-app-logo-icon class="w-24 fill-current text-black dark:text-white" />
                 </span>
-                <span class="text-sm text-gray-600 dark:text-gray-400">{{ config('app.name', 'Laravel') }}</span>
             </a>
 
             <!-- Judul -->
-            <div class="text-center">
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-1">Selamat Datang</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Masuk untuk mengakses dashboard Anda</p>
+            <div class="text-center mb-5">
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Selamat Datang</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Login untuk mengakses akun Anda</p>
             </div>
 
             <!-- Form Login -->
@@ -21,7 +20,10 @@
                 <div>
                     <label for="nim"
                         class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">NIM</label>
-                    <flux:input wire:model="nim" icon="user" type="text" required placeholder="Masukkan NIM" />
+                    <flux:input wire:model="nim"  autofocus :invalid="$errors->has('nim')" icon="user" type="text" required placeholder="Masukkan NIM" />
+                    @error('nim')
+                            <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+                     @enderror
                 </div>
 
                 <div>
@@ -32,7 +34,8 @@
                             class="text-xs text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Lupa
                             password?</a>
                     </div>
-                    <flux:input wire:model="password" icon="key" viewable type="password" required placeholder="Masukkan password anda" />
+                    <flux:input :invalid="$errors->has('password')" wire:model="password" icon="key" viewable type="password" required
+                        placeholder="Masukkan password anda" />
                 </div>
 
                 <div class="flex items-center">
@@ -63,8 +66,7 @@
             <!-- Animated Welcome Text -->
             <h1 class="text-xl md:text-2xl font-bold text-indigo-800 dark:text-indigo-100 leading-snug">
                 <span id="typing-title" class="relative inline-block">
-                    <span
-                        class="absolute top-0 w-0.5 h-6 bg-indigo-600 dark:bg-indigo-300 animate-pulse"></span>
+                    <span class="absolute top-0 w-0.5 h-6 bg-indigo-600 dark:bg-indigo-300 animate-pulse"></span>
                 </span>
             </h1>
 

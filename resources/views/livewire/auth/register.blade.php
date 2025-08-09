@@ -1,11 +1,10 @@
 <div class="flex flex-col md:flex-row bg-white dark:bg-gray-900">
     <!-- Container 2: Ilustrasi SVG Animasi (now on left) -->
     <div
-        class="flex-col w-full md:w-1/2 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/30 flex items-center justify-center p-4  overflow-hidden order-1 md:order-none">
-        <a href="{{ route('home') }}" class="flex flex-col items-center gap-1" wire:navigate>
+        class="hidden md:block flex-col w-full md:w-1/2 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/30 md:flex items-center justify-center p-4  overflow-hidden order-1 md:order-none">
+        <a href="{{ route('home') }}" class="flex md:mb-5  flex-col items-center gap-1" wire:navigate>
             <span class="flex items-center justify-center rounded-md">
-                {{-- <img src="{{ asset('assets/images/logo.svg') }}" alt="BEM Logo"> --}}
-                <x-app-logo-icon />
+                <x-app-logo-icon class="w-20 md:w-56" />
             </span>
         </a>
         <div class="text-center max-w-lg">
@@ -39,35 +38,126 @@
                     <div>
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Nama
                             Depan</label>
-                        <flux:input :invalid="$errors->has('initial_name')"  wire:model="initial_name" icon="user" type="text" required placeholder="Nama depan" />
+                        <flux:input :invalid="$errors->has('initial_name')" wire:model="initial_name" icon="user"
+                            type="text" required placeholder="Nama depan" />
+                        @error('initial_name')
+                            <div class="flex items-center pt-1">
+                                <span class="flex gap-2 items-center">
+                                    <svg class="w-[18px] h-[18px] text-red-600 dark:text-red-600" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+
+                                    <p class="text-xs text-red-600 font-bold">
+                                        {{ $message }}
+                                    </p>
+                                </span>
+                            </div>
+                        @enderror
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Nama
                             Belakang</label>
-                        <flux:input wire:model="last_name" :invalid="$errors->has('last_name')" type="text" placeholder="Nama belakang (opsional)" />
+                        <flux:input wire:model="last_name" :invalid="$errors->has('last_name')" type="text"
+                            placeholder="Nama belakang (opsional)" />
+                        @error('last_name')
+                            <div class="flex items-center pt-1">
+                                <span class="flex gap-2 items-center">
+                                    <svg class="w-[18px] h-[18px] text-red-600 dark:text-red-600" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd"
+                                            d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+
+                                    <p class="text-xs text-red-600 font-bold">
+                                        {{ $message }}
+                                    </p>
+                                </span>
+                            </div>
+                        @enderror
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">NIM</label>
-                    <flux:input wire:model="nim" :invalid="$errors->has('nim')" icon="credit-card" type="text" required placeholder="Nomor Induk Mahasiswa" />
+                    <flux:input wire:model="nim" :invalid="$errors->has('nim')" icon="credit-card" type="text"
+                        required placeholder="Nomor Induk Mahasiswa" />
+
+                    @error('nim')
+                        <div class="flex items-center pt-1">
+                            <span class="flex gap-2 items-center">
+                                <svg class="w-[18px] h-[18px] text-red-600 dark:text-red-600" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                <p class="text-xs text-red-600 font-bold">
+                                    {{ $message }}
+                                </p>
+                            </span>
+                        </div>
+                    @enderror
                 </div>
 
                 <div>
                     <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
                         <flux:select.option value="teknologi  informasi">Teknologi Informasi</flux:select.option>
                     </flux:select>
+                    @error('prodi')
+                        <div class="flex items-center pt-1">
+                            <span class="flex gap-2 items-center">
+                                <svg class="w-[18px] h-[18px] text-red-600 dark:text-red-600" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                <p class="text-xs text-red-600 font-bold">
+                                    {{ $message }}
+                                </p>
+                            </span>
+                        </div>
+                    @enderror
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
-                    <flux:input wire:model="password" :invalid="$errors->has('password')"  icon="key" viewable type="password" required placeholder="Minimal 8 karakter" />
+                    <flux:input wire:model="password" icon="key" viewable type="password" required
+                        placeholder="Minimal 8 karakter" />
                 </div>
 
                 <div>
                     <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Konfirmasi
                         Password</label>
-                    <flux:input wire:model="password_confirmation" :invalid="$errors->has('password_confirmation')" icon="key" viewable type="password" required placeholder="Ulangi password anda" />
+                    <flux:input wire:model="password_confirmation" :invalid="$errors->has('password')" icon="key"
+                        viewable type="password" required placeholder="Ulangi password anda" />
+                    @error('password')
+                        <div class="flex items-center pt-1">
+                            <span class="flex gap-2 items-center">
+                                <svg class="w-[18px] h-[18px] text-red-600 dark:text-red-600" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path fill-rule="evenodd"
+                                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0V8Zm-1 7a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H12Z"
+                                        clip-rule="evenodd" />
+                                </svg>
+
+                                <p class="text-xs text-red-600 font-bold">
+                                    {{ $message }}
+                                </p>
+                            </span>
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="flex items-center">
