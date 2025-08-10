@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,7 +17,7 @@ return new class extends Migration
             $table->id('id_user');
             $table->string('full_name');
             $table->string('nim')->unique();
-            $table->string('prodi');
+            $table->string('prodi')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id_role')->on('roles');
@@ -38,6 +40,14 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        $admin = [
+            'full_name' => 'Admin',
+            'nim' => 'ADM-BEM-KM',
+            'role_id' => 1,
+            'password' => Hash::make('password@123')
+        ];
+        User::create($admin);
     }
 
     /**

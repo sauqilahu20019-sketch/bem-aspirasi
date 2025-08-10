@@ -18,7 +18,7 @@ return new class extends Migration
             $table->longText('aspirasi');
             $table->enum('status', ['accepted', 'rejected', 'commented']);
             $table->foreign('diajukan_oleh')->references('id_user')->on('users');
-            $table->foreign('ditujuakan_ke')->references('id_user')->on('users');
+            $table->foreign('ditujukan_ke')->references('id_user')->on('users');
             $table->timestamps();
         });
     }
