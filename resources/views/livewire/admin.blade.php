@@ -36,9 +36,11 @@
                         <flux:heading size="lg">Add Admin</flux:heading>
                         <flux:text class="mt-2">Add an Admin for your system.</flux:text>
                     </div>
-                    <flux:input :invalid="$errors->has('nim')" wire:model="nim" label="NIDN" placeholder="NIDN" />
-                    <flux:input :invalid="$errors->has('full_name')" wire:model="full_name" label="Full Name"
+                    <flux:input icon="credit-card" :invalid="$errors->has('nim')" wire:model="nim" label="NIDN" placeholder="NIDN" />
+                    <flux:input icon="user" :invalid="$errors->has('full_name')" wire:model="full_name" label="Full Name"
                         placeholder="Full Name" />
+                    <flux:input icon="key" :invalid="$errors->has('password')" wire:model="password" label="Password"
+                        placeholder="Password" type='password' viewable />
                     {{-- <flux:select wire:model='gender' :invalid="$errors->has('gender')">
                         <flux:select.option value="">Pilih Jenis Kelamin</flux:select.option>
                         <flux:select.option value="Laki-laki">Laki-laki</flux:select.option>
@@ -61,16 +63,12 @@
                     <flux:input :invalid="$errors->has('nim')" wire:model="nim" label="NIDN" placeholder="NIDN" />
                     <flux:input :invalid="$errors->has('full_name')" wire:model="full_name" label="Full Name"
                         placeholder="Full Name" />
-                    <flux:input :invalid="$errors->has('email')" wire:model="email" label="Email"
-                        placeholder="Email" />
-                    <flux:input :invalid="$errors->has('birthday')" wire:model="birthday" type="date"
-                        label="Birthday" placeholder="Birthday" />
-                    <flux:select placeholder="Gender" wire:model='gender' :invalid="$errors->has('gender')">
+                    <flux:input icon="key" :invalid="$errors->has('password')" wire:model="password" label="Password"
+                        placeholder="Password" type='password' viewable />
+                    {{-- <flux:select placeholder="Gender" wire:model='gender' :invalid="$errors->has('gender')">
                         <flux:select.option value="Laki-laki">Laki-laki</flux:select.option>
                         <flux:select.option value="Perempuan">Perempuan</flux:select.option>
-                    </flux:select>
-                    <flux:input :invalid="$errors->has('address')" wire:model="address" label="Address"
-                        placeholder="Address" />
+                    </flux:select> --}}
                     <div class="flex">
                         <flux:spacer />
                         <flux:button type="submit" variant="primary">Edit Admin</flux:button>
@@ -90,22 +88,20 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                        @forelse ($users as $no => $participant)
+                        @forelse ($users as $no => $admin)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200">
                                 <td class="px-2 py-2">{{ $users->firstItem() + $no }}</td>
                                 <td class="px-2 py-2 flex items-center gap-2">
-                                    <img src="{{ asset('storage/' . $participant->avatar) }}"
+                                    <img src="{{ asset('storage/' . $admin->avatar) }}"
                                         class="h-6 w-6 rounded-full" alt="avatar">
                                     <div>
-                                        <div class="text-[0.7rem] font-semibold">{{ $participant->full_name }}</div>
-                                        <div class="text-[0.65rem] text-gray-500 dark:text-gray-400">
-                                            {{ $participant->email }}</div>
+                                        <div class="text-[0.7rem] font-semibold">{{ $admin->full_name }}</div>
                                     </div>
                                 </td>
-                                <td class="px-2 py-2 text-[0.7rem]">{{ $participant->nim }}
+                                <td class="px-2 py-2 text-[0.7rem]">{{ $admin->nim }}
                                 </td>
                                 <td class="px-2 py-2 text-[0.7rem]">
-                                    {{ $participant->role->role_name }}</td>
+                                    {{ $admin->role->role_name }}</td>
                                 <td class="px-2 py-2 space-x-1">
                                     <flux:dropdown position="bottom" align="start">
                                         <button
@@ -115,14 +111,16 @@
                                         <flux:menu class="w-10">
                                             <div class="flex flex-col space-y-1">
 
-                                                <flux:button wire:click="edit({{ $participant->id_user }})"
+                                                <flux:button wire:click="edit({{ $admin->id_user }})"
                                                     size="xs" icon="pencil" class="!text-[0.65rem]">
                                                     Edit
                                                 </flux:button>
-                                                <flux:button wire:click="confirmDelete({{ $participant->id_user }})"
-                                                    size="xs" icon="trash" class="!text-[0.65rem]">
-                                                    Hapus
-                                                </flux:button>
+                                                @if($admin->id_user !== Auth::user()->id_user)
+                                                    <flux:button wire:click="confirmDelete({{ $admin->id_user }})"
+                                                        size="xs" icon="trash" class="!text-[0.65rem]">
+                                                        Hapus
+                                                    </flux:button>
+                                                @endif
                                             </div>
                                         </flux:menu>
                                     </flux:dropdown>
