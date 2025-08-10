@@ -20,6 +20,15 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Administrator')" class="grid">
                     <flux:navlist.item icon="users" :href="route('user.admin')" :current="request()->routeIs('user.admin')" wire:navigate>{{ __('Admin') }}</flux:navlist.item>
+                    <flux:navlist.item icon="academic-cap" :href="route('user.rector')" :current="request()->routeIs('user.rector')" wire:navigate>{{ __('Rektor') }}</flux:navlist.item>
+                    <flux:navlist.item icon="academic-cap" :href="route('user.warek')" :current="request()->routeIs('user.warek')" wire:navigate>{{ __('Warek') }}</flux:navlist.item>
+                    <flux:navlist.item icon="user" :href="route('user.mahasiswa')" :current="request()->routeIs('user.mahasiswa')" wire:navigate>{{ __('Mahasiswa') }}</flux:navlist.item>
+                </flux:navlist.group>
+            </flux:navlist>
+
+            <flux:navlist variant="outline">
+                <flux:navlist.group :heading="__('Data')" class="grid">
+                    <flux:navlist.item icon="clipboard-document-check" :href="route('list.aspirasi')" :current="request()->routeIs('list.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
             <flux:spacer />

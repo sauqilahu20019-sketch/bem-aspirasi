@@ -102,7 +102,10 @@ class User extends Authenticatable
     protected function onlyWarek($query)
     {
         $query->whereHas('role', function ($query) {
-            $query->where('role_name', 'Wakil Rektor I') || $query->where('role_name', 'Wakil Rektor II') || $query->where('role_name', 'Wakil Rektor III');
+            $query->where('role_name', 'Wakil Rektor I')
+            ->orWhere('role_name', 'Wakil Rektor II')
+            ->orWhere('role_name', 'Wakil Rektor III')
+            ->orWhere('role_name', 'Wakil Rektor IV');
         });
     }
 

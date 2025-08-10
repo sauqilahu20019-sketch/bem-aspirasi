@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_aspirasi');
             $table->unsignedBigInteger('diajukan_oleh');
             $table->unsignedBigInteger('ditujukan_ke');
-            $table->longText('aspirasi');
-            $table->enum('status', ['accepted', 'rejected', 'commented']);
+            $table->text('aspirasi');
+            $table->enum('status', ['pending','accepted', 'rejected', 'commented']);
             $table->foreign('diajukan_oleh')->references('id_user')->on('users');
             $table->foreign('ditujukan_ke')->references('id_user')->on('users');
             $table->timestamps();
