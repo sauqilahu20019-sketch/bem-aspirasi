@@ -36,7 +36,7 @@ class Login extends Component
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'nim' => __('auth.failed'),
+                'nim' => __('NIM atau Password tidak sesuai!'),
             ]);
         }
 
@@ -60,7 +60,7 @@ class Login extends Component
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'nim' => __('auth.throttle', [
+            'nim' => __('Terlalu banyak percobaan', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -78,5 +80,37 @@ class User extends Authenticatable
     public function aspirasiKeSaya(): HasMany
     {
         return $this->hasMany(Aspirasi::class, 'ditujukan_ke', 'id_user');
+    }
+
+    #[Scope]
+    protected function onlyAdmin($query)
+    {
+        $query->whereHas('role', function ($query) {
+            $query->where('role_name', 'Admin');
+        });
+    }
+
+    #[Scope]
+    protected function onlyRektor($query)
+    {
+        $query->whereHas('role', function ($query) {
+            $query->where('role_name', 'Rektor');
+        });
+    }
+
+    #[Scope]
+    protected function onlyWarek($query)
+    {
+        $query->whereHas('role', function ($query) {
+            $query->where('role_name', 'Wakil Rektor I') || $query->where('role_name', 'Wakil Rektor II') || $query->where('role_name', 'Wakil Rektor III');
+        });
+    }
+
+    #[Scope]
+    protected function onlyMahasiswa($query)
+    {
+        $query->whereHas('role', function ($query) {
+            $query->where('role_name', 'Mahasiswa');
+        });
     }
 }

@@ -17,6 +17,11 @@
                 </flux:navlist.group>
             </flux:navlist>
 
+            <flux:navlist variant="outline">
+                <flux:navlist.group :heading="__('Administrator')" class="grid">
+                    <flux:navlist.item icon="users" :href="route('user.admin')" :current="request()->routeIs('user.admin')" wire:navigate>{{ __('Admin') }}</flux:navlist.item>
+                </flux:navlist.group>
+            </flux:navlist>
             <flux:spacer />
 
             <!-- Desktop User Menu -->
