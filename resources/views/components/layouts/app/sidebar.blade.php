@@ -14,23 +14,34 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    @can('is_warek')
+                        <flux:navlist.item icon="clipboard-document-check" :href="route('warek.aspirasi')" :current="request()->routeIs('warek.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
+                    @endcan
+                    @can('is_mahasiswa')
+                        <flux:navlist.item icon="clipboard-document-check" :href="route('mahasiswa.aspirasi')" :current="request()->routeIs('mahasiswa.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
+                    @endcan
                 </flux:navlist.group>
             </flux:navlist>
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Administrator')" class="grid">
-                    <flux:navlist.item icon="users" :href="route('user.admin')" :current="request()->routeIs('user.admin')" wire:navigate>{{ __('Admin') }}</flux:navlist.item>
-                    <flux:navlist.item icon="academic-cap" :href="route('user.rector')" :current="request()->routeIs('user.rector')" wire:navigate>{{ __('Rektor') }}</flux:navlist.item>
-                    <flux:navlist.item icon="academic-cap" :href="route('user.warek')" :current="request()->routeIs('user.warek')" wire:navigate>{{ __('Warek') }}</flux:navlist.item>
-                    <flux:navlist.item icon="user" :href="route('user.mahasiswa')" :current="request()->routeIs('user.mahasiswa')" wire:navigate>{{ __('Mahasiswa') }}</flux:navlist.item>
-                </flux:navlist.group>
-            </flux:navlist>
+            @can('is_admin')
+                <flux:navlist variant="outline">
+                    <flux:navlist.group :heading="__('Administrator')" class="grid">
+                        <flux:navlist.item icon="users" :href="route('user.admin')" :current="request()->routeIs('user.admin')" wire:navigate>{{ __('Admin') }}</flux:navlist.item>
+                        <flux:navlist.item icon="academic-cap" :href="route('user.rector')" :current="request()->routeIs('user.rector')" wire:navigate>{{ __('Rektor') }}</flux:navlist.item>
+                        <flux:navlist.item icon="academic-cap" :href="route('user.warek')" :current="request()->routeIs('user.warek')" wire:navigate>{{ __('Warek') }}</flux:navlist.item>
+                        <flux:navlist.item icon="user" :href="route('user.mahasiswa')" :current="request()->routeIs('user.mahasiswa')" wire:navigate>{{ __('Mahasiswa') }}</flux:navlist.item>
+                    </flux:navlist.group>
+                </flux:navlist>
+            @endcan
 
-            <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Data')" class="grid">
-                    <flux:navlist.item icon="clipboard-document-check" :href="route('list.aspirasi')" :current="request()->routeIs('list.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
-                </flux:navlist.group>
-            </flux:navlist>
+            @can('is_adminOrRektor')
+                <flux:navlist variant="outline">
+                    <flux:navlist.group :heading="__('Data')" class="grid">
+                        <flux:navlist.item icon="clipboard-document-check" :href="route('list.aspirasi')" :current="request()->routeIs('list.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
+                    </flux:navlist.group>
+                </flux:navlist>
+            @endcan
+
             <flux:spacer />
 
             <!-- Desktop User Menu -->
@@ -55,7 +66,7 @@
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
                                     <span class="truncate font-semibold">{{ auth()->user()->full_name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->nim }}</span>
+                                    <span class="truncate text-xs">{{ auth()->user()->role->role_name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +116,7 @@
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
                                     <span class="truncate font-semibold">{{ auth()->user()->full_name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->nim }}</span>
+                                    <span class="truncate text-xs">{{ auth()->user()->role->role_name }}</span>
                                 </div>
                             </div>
                         </div>

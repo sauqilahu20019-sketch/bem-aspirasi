@@ -1,6 +1,6 @@
 <main class="p-1 min-w-full mx-auto space-y-6">
     @slot('title')
-        Admin User
+        Mahasiswa User
     @endslot
     <flux:fieldset>
         <flux:legend>Daftar Mahasiswa</flux:legend>
@@ -38,9 +38,8 @@
                     </div>
                     <flux:input icon="credit-card" :invalid="$errors->has('nim')" wire:model="nim" label="NIM"
                         placeholder="NIDN" />
-                    <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
-                        <flux:select.option value="teknologi  informasi">Teknologi Informasi</flux:select.option>
-                    </flux:select>
+                    <flux:input icon="user" :invalid="$errors->has('full_name')" wire:model="full_name" label="Nama Lengkap"
+                        placeholder="Nama Lengkap" />
                     <flux:input icon="key" :invalid="$errors->has('password')" wire:model="password"
                         label="Password" placeholder="Password" type='password' viewable />
                     <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">

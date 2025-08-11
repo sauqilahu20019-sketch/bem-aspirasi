@@ -46,8 +46,6 @@
                         <flux:select.option value="5">Wakil Rektor III - Kemahasiswaan</flux:select.option>
                         <flux:select.option value="6">Wakil Rektor IV - HUMAS</flux:select.option>
                     </flux:select>
-                    {{-- <flux:textarea :invalid="$errors->has('description')" wire:model="description" label="Deskripsi"
-                        placeholder="Description" type='text' /> --}}
                     <flux:input icon="key" :invalid="$errors->has('password')" wire:model="password" label="Password"
                         placeholder="Password" type='password' viewable />
                     <div class="flex">

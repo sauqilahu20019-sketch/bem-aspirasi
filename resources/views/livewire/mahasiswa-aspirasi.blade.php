@@ -177,7 +177,6 @@
                     <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                         <tr>
                             <th class="px-2 py-2 text-left">No</th>
-                            <th class="px-2 py-2 text-left">Nama</th>
                             <th class="px-2 py-2 text-left">Aspirasi</th>
                             <th class="px-2 py-2 text-left">Ditujukan Ke</th>
                             <th class="px-2 py-2 text-left">Catatan</th>
@@ -189,14 +188,6 @@
                         @forelse ($data as $no => $data_aspirasi)
                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-800 dark:text-gray-200">
                                 <td class="px-2 py-2">{{ $loop->iteration }}</td>
-                                <td class="px-2 py-2 flex flex-col">
-                                    <div class="text-[0.7rem] font-semibold">{{ $data_aspirasi->pengaju->full_name }}
-                                    </div>
-                                    <small class="text-[0.6rem]">
-                                        {{ $data_aspirasi->pengaju->nim }} -
-                                        {{ getProdiAcronym($data_aspirasi->pengaju->prodi) }}
-                                    </small>
-                                </td>
                                 <td class="px-2 py-2 text-[0.7rem]">{{ $data_aspirasi->aspirasi }}</td>
                                 <td class="px-2 py-2 text-[0.7rem]">
                                     {{ $data_aspirasi->yangDituju->full_name }} -
@@ -349,73 +340,6 @@
                                         </button>
                                         <flux:menu class="w-10">
                                             <div class="flex flex-col space-y-1">
-                                                <!-- Pending State Actions -->
-                                                @can('is_warek')
-                                                    @if ($data_aspirasi->status === 'pending')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="x-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
-                                                            Tolak
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
-
-                                                        <!-- Accepted State Actions -->
-                                                    @elseif($data_aspirasi->status === 'accepted')
-                                                        <flux:button
-                                                            wire:click="markAsPending({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="clock"
-                                                            class="!text-[0.65rem] cursor-pointer text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:scale-[1.02]">
-                                                            Pending
-                                                        </flux:button>
-                                                        <!-- Rejected State Actions -->
-                                                    @elseif($data_aspirasi->status === 'rejected')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
-                                                        <!-- commented State Actions -->
-                                                    @elseif($data_aspirasi->status === 'commented')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="x-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
-                                                            Tolak
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
-                                                    @endif
-                                                @endcan
-                                                <flux:separator />
                                                 <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
                                                     size="xs" icon="pencil-square"
                                                     class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">

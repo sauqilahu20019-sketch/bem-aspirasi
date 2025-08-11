@@ -80,13 +80,10 @@ class Warek extends Component
             'full_name' => ['required', 'string', 'max:255'],
             'nim' => ['required', 'string', Rule::unique(User::class, 'nim')->ignore($this->admin->id_user, 'id_user')],
             'role_id' => ['required'],
-            'description' => ['required', 'max:2000'],
         ], [
             'full_name.required' => 'Nama harus diisi!',
             'full_name.string' => 'Nama harus berupa Text!',
             'full_name.max' => 'Max. Nama 255 Karakter',
-            'description.required' => 'Deskripsi harus diisi!',
-            'description.max' => 'Max. Deskripsi 255 Karakter',
             'nim.required' => 'NIDN harus diisi!',
             'nim.string' => 'NIDN harus berupa Text!',
             'role_id.required' => 'Peran harus diisi!',

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-class is_adminOrRektor
+class isAdminOrWarekOrRektor
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class is_adminOrRektor
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Gate::denies('is_adminOrRektor')) {
+        if (Gate::denies('is_adminOrWarekOrRektor')) {
             abort(404);
         }
         return $next($request);

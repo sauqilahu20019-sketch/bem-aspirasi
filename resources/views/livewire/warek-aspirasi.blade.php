@@ -96,13 +96,11 @@
                         </flux:select>
                     </div>
                 </div>
-                @can('is_mahasiswa')
-                    <flux:modal.trigger name="add-aspirasi" class="mb-4">
-                        <div class="flex gap-2">
-                            <flux:button icon="plus-circle" size="xs" class="shadow-sm">Tambah</flux:button>
-                        </div>
-                    </flux:modal.trigger>
-                @endcan
+                <flux:modal.trigger name="add-aspirasi" class="mb-4">
+                    <div class="flex gap-2">
+                        <flux:button icon="plus-circle" size="xs" class="shadow-sm">Tambah</flux:button>
+                    </div>
+                </flux:modal.trigger>
             </div>
 
             {{-- Add Aspirasi Modal --}}
@@ -350,80 +348,80 @@
                                         <flux:menu class="w-10">
                                             <div class="flex flex-col space-y-1">
                                                 <!-- Pending State Actions -->
-                                                @can('is_warek')
-                                                    @if ($data_aspirasi->status === 'pending')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="x-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
-                                                            Tolak
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
+                                                @if ($data_aspirasi->status === 'pending')
+                                                    <flux:button
+                                                        wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="check-circle"
+                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                        Terima
+                                                    </flux:button>
+                                                    <flux:button
+                                                        wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="x-circle"
+                                                        class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
+                                                        Tolak
+                                                    </flux:button>
+                                                    <flux:button
+                                                        wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="chat-bubble-left-ellipsis"
+                                                        class="!text-[0.65rem]">
+                                                        Komentar
+                                                    </flux:button>
 
-                                                        <!-- Accepted State Actions -->
-                                                    @elseif($data_aspirasi->status === 'accepted')
-                                                        <flux:button
-                                                            wire:click="markAsPending({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="clock"
-                                                            class="!text-[0.65rem] cursor-pointer text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:scale-[1.02]">
-                                                            Pending
-                                                        </flux:button>
-                                                        <!-- Rejected State Actions -->
-                                                    @elseif($data_aspirasi->status === 'rejected')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
-                                                        <!-- commented State Actions -->
-                                                    @elseif($data_aspirasi->status === 'commented')
-                                                        <flux:button
-                                                            wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="check-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                            Terima
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="x-circle"
-                                                            class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
-                                                            Tolak
-                                                        </flux:button>
-                                                        <flux:button
-                                                            wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
-                                                            size="xs" icon="chat-bubble-left-ellipsis"
-                                                            class="!text-[0.65rem]">
-                                                            Komentar
-                                                        </flux:button>
-                                                    @endif
-                                                @endcan
-                                                <flux:separator />
-                                                <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
+                                                    <!-- Accepted State Actions -->
+                                                @elseif($data_aspirasi->status === 'accepted')
+                                                    <flux:button
+                                                        wire:click="markAsPending({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="clock"
+                                                        class="!text-[0.65rem] cursor-pointer text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:scale-[1.02]">
+                                                        Pending
+                                                    </flux:button>
+                                                    <!-- Rejected State Actions -->
+                                                @elseif($data_aspirasi->status === 'rejected')
+                                                    <flux:button
+                                                        wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="check-circle"
+                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                        Terima
+                                                    </flux:button>
+                                                    <flux:button
+                                                        wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="chat-bubble-left-ellipsis"
+                                                        class="!text-[0.65rem]">
+                                                        Komentar
+                                                    </flux:button>
+                                                    <!-- commented State Actions -->
+                                                @elseif($data_aspirasi->status === 'commented')
+                                                    <flux:button
+                                                        wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="check-circle"
+                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                        Terima
+                                                    </flux:button>
+                                                    <flux:button
+                                                        wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="x-circle"
+                                                        class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
+                                                        Tolak
+                                                    </flux:button>
+                                                    <flux:button
+                                                        wire:click="comment({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="chat-bubble-left-ellipsis"
+                                                        class="!text-[0.65rem]">
+                                                        Komentar
+                                                    </flux:button>
+                                                @endif
+                                                <flux:separator/>
+                                                <flux:button
+                                                    wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
                                                     size="xs" icon="pencil-square"
                                                     class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
                                                     Edit
                                                 </flux:button>
                                                 <flux:button
                                                     wire:click="confirmDelete({{ $data_aspirasi->id_aspirasi }})"
-                                                    size="xs" icon="trash" variant="danger"
+                                                    size="xs" icon="trash"
+                                                    variant="danger"
                                                     class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
                                                     Hapus
                                                 </flux:button>

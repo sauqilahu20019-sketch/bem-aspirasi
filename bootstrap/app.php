@@ -5,6 +5,7 @@ use App\Http\Middleware\is_adminOrRektor;
 use App\Http\Middleware\is_mahasiswa;
 use App\Http\Middleware\is_rektor;
 use App\Http\Middleware\is_warek;
+use App\Http\Middleware\isAdminOrWarekOrRektor;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -22,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_warek' => is_warek::class,
             'is_mahasiswa' => is_mahasiswa::class,
             'is_adminOrRektor' => is_adminOrRektor::class,
+            'is_adminOrWarekOrRektor' => isAdminOrWarekOrRektor::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

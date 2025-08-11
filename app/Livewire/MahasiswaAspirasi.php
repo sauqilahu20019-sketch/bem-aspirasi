@@ -11,7 +11,7 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Aspirasi extends Component
+class MahasiswaAspirasi extends Component
 {
     use WithPagination;
 
@@ -30,16 +30,18 @@ class Aspirasi extends Component
         $this->data_warek = User::onlyWarek()->get();
 
         $aspirasis = ModelsAspirasi::with(['pengaju', 'yangDituju.role'])
+            ->whereHas('pengaju', function ($q) {
+                $q->where('id_user', Auth::user()->id_user);
+            })
             ->when($this->search, function ($query) {
-                $query->whereHas('pengaju', function ($q) {
-                    $q->where('full_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('nim', 'like', '%' . $this->search . '%');
+                $query->where(function ($q) {
+                    $q->where('aspirasi', 'like', '%' . $this->search . '%');
                 });
             })
             ->latest()
             ->paginate($this->perPage);
 
-        return view('livewire.aspirasi', [
+        return view('livewire.mahasiswa-aspirasi', [
             'data' => $aspirasis,
         ]);
     }
@@ -47,18 +49,21 @@ class Aspirasi extends Component
     public function store()
     {
         $validated = $this->validate([
-            'ditujukan_ke' => ['required'],
-            'aspirasi' => ['required', 'string', 'max:3000'],
+            'add_ditujukan_ke' => ['required'],
+            'add_aspirasi' => ['required', 'string', 'max:3000'],
         ], [
-            'ditujukan_ke.required' => 'Tujuan aspirasi harus dipilih!',
-            'aspirasi.required' => 'Aspirasi harus diisi!',
-            'aspirasi.max' => 'Aspirasi maksimal 3000 karakter',
-            'aspirasi.string' => 'Aspirasi harus berupa teks!',
+            'add_ditujukan_ke.required' => 'Tujuan aspirasi harus dipilih!',
+            'Add_aspirasi.required' => 'Aspirasi harus diisi!',
+            'add_aspirasi.max' => 'Aspirasi maksimal 3000 karakter',
+            'add_aspirasi.string' => 'Aspirasi harus berupa teks!',
         ]);
 
-        $validated['diajukan_oleh'] = Auth::user()->id_user;
-        $validated['status'] = 'pending';
-
+        $validated = [
+            'diajukan_oleh' => Auth::user()->id_user,
+            'ditujukan_ke' => $validated['add_ditujukan_ke'],
+            'aspirasi' => $validated['add_aspirasi'],
+            'status' => 'pending'
+        ];
         try {
             ModelsAspirasi::create($validated);
             Flux::modals()->close();
@@ -112,52 +117,5 @@ class Aspirasi extends Component
     public function confirmDelete($id)
     {
         $this->dispatch('confirmDelete', type: 'question', title: 'Yakin hapus?', text: 'Tindakan ini tidak dapat dibatalkan!', id: $id);
-    }
-
-    public function comment(ModelsAspirasi $aspirasi)
-    {
-        $this->model_aspirasi = $aspirasi;
-        Flux::modal('aspirasi-notes')->show();
-    }
-
-    public function commentAspirasi()
-    {
-        $validated = $this->validate([
-            'note' => ['required', 'string', 'max:2000']
-        ]);
-        $validated['aspirasi_id'] = $this->model_aspirasi->id_aspirasi;
-        $validated['oleh'] = Auth::user()->id_user;
-        try{
-            AspirasiNote::create($validated);
-            Flux::modals()->close();
-            $this->dispatch('alert',
-                type: 'success',
-                title: 'Sukses',
-                text: 'Catatan berhasil disimpan!'
-            );
-        } catch(\Exception $e){
-            Flux::modals()->close();
-            $this->dispatch('alert',
-                type: 'error',
-                title: 'Error',
-                time: 5000,
-                text: $e->getMessage()
-            );
-        }
-    }
-
-    public function approveAspirasi(ModelsAspirasi $aspirasi)
-    {
-        $aspirasi->update(['status' => 'accepted']);
-    }
-
-    public function rejectAspirasi(ModelsAspirasi $aspirasi)
-    {
-        $aspirasi->update(['status' => 'rejected']);
-    }
-
-    public function markAsPending(ModelsAspirasi $aspirasi)
-    {
-        $aspirasi->update(['status' => 'pending']);
     }
 }

@@ -116,4 +116,9 @@ class User extends Authenticatable
             $query->where('role_name', 'Mahasiswa');
         });
     }
+
+    public function aspirasiNotes(): HasMany
+    {
+        return $this->hasMany(AspirasiNote::class, 'oleh', 'id_user');
+    }
 }
