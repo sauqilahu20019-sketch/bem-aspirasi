@@ -6,17 +6,26 @@
         <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900">
             <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
                 <a href="#" class="flex items-center">
-                    <img src="{{ asset('assets/images/logo.png') }}" class="h-6 mr-3 sm:h-9" alt="Landwind Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BEM-KM UA</span>
+                    <!-- Logo - Ukuran disesuaikan -->
+                    <img src="{{ asset('assets/images/logo.png') }}" class="h-6 mr-2 sm:h-8" alt="BEM-KM UA Logo" />
+
+                    <!-- Text Logo -->
+                    <div class="flex flex-col" style="line-height: 0.75;">
+                        <span class="text-lg font-bold text-gray-800 dark:text-white sm:text-xl"
+                            style="margin-bottom: -2px;">BEM-KM UA</span>
+                        <span class="text-xs text-gray-600 dark:text-gray-300 sm:text-sm"
+                            style="margin-top: -2px;">Kabinet Garda Muda 2024-2025</span>
+                    </div>
                 </a>
                 <div class="flex items-center lg:order-2">
                     @if (Auth::user())
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <flux:button type="submmit" variant="danger" size='sm'>Logout</flux:button>
-                    </form>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <flux:button type="submmit" variant="danger" size='sm'>Logout</flux:button>
+                        </form>
                     @else
-                        <flux:button href="{{ route('login') }}" variant="primary" color="indigo" size='sm'>Log In</flux:button>
+                        <flux:button href="{{ route('login') }}" variant="primary" color="indigo" size='sm'>Log In
+                        </flux:button>
                     @endif
                     <button data-collapse-toggle="mobile-menu-2" type="button"
                         class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -322,13 +331,13 @@
                     <p class="mb-8 font-light lg:text-xl">Deliver great service experiences fast - without the
                         complexity of traditional ITSM solutions.</p>
                 </div>
-                <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="{{ asset('assets/images/feature-1.png') }}"
-                    alt="dashboard feature image">
+                <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex"
+                    src="{{ asset('assets/images/feature-1.png') }}" alt="dashboard feature image">
             </div>
             <!-- Row -->
             <div class="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
-                <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex" src="{{ asset('assets/images/feature-2.png') }}"
-                    alt="feature image 2">
+                <img class="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex"
+                    src="{{ asset('assets/images/feature-2.png') }}" alt="feature image 2">
                 <div class="text-gray-500 sm:text-lg dark:text-gray-400">
                     <h2 class="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">We invest in
                         the world’s potential</h2>
