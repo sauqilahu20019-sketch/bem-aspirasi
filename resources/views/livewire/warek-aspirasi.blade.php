@@ -412,12 +412,14 @@
                                                     </flux:button>
                                                 @endif
                                                 <flux:separator/>
-                                                <flux:button
-                                                    wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
-                                                    size="xs" icon="pencil-square"
-                                                    class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                    Edit
-                                                </flux:button>
+                                                @can('is_mahasiswa')
+                                                    <flux:button
+                                                        wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="pencil-square"
+                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                        Edit
+                                                    </flux:button>
+                                                @endcan
                                                 <flux:button
                                                     wire:click="confirmDelete({{ $data_aspirasi->id_aspirasi }})"
                                                     size="xs" icon="trash"
