@@ -77,8 +77,8 @@
         </style>
     @endpush
     <flux:fieldset>
-        <flux:legend>Daftar Wakil Rektor</flux:legend>
-        <flux:description>Berikut adalah data Wakil Rektor Universitas Annuqayah.</flux:description>
+        <flux:legend>Daftar Aspirasi</flux:legend>
+        <flux:description>Berikut adalah aspirasi mahasiswa yang diajukan.</flux:description>
         <div class="min-h-screen">
             <div class="flex justify-between items-center mb-4 ">
                 <div class="flex gap-2">
