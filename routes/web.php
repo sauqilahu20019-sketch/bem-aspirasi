@@ -16,11 +16,35 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', function(){
+        $totalMhs = App\Models\User::onlyMahasiswa()->count();
+        $totalAdm = App\Models\User::onlyAdmin()->count();
+        $totalWrk = App\Models\User::onlyWarek()->count();
+        $totalRek = App\Models\User::onlyRektor()->count();
+
+        $aspPen = App\Models\Aspirasi::onlyPending()->count();
+        $aspAcc = App\Models\Aspirasi::onlyAcc()->count();
+        $aspRej = App\Models\Aspirasi::onlyRej()->count();
+        $aspTot = App\Models\Aspirasi::all()->count();
+        $aspirasis = App\Models\Aspirasi::latest()->paginate(5);
+        return view('dashboard', [
+            'totalMhs' => $totalMhs,
+            'totalAdm' => $totalAdm,
+            'totalWrk' => $totalWrk,
+            'totalRek' => $totalRek,
+            'aspPen' => $aspPen,
+            'aspAcc' => $aspAcc,
+            'aspRej' => $aspRej,
+            'aspTot' => $aspTot,
+            'aspirasis' => $aspirasis
+        ]);
+    })->name('dashboard');
+
     Route::redirect('settings', 'settings/profile');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');

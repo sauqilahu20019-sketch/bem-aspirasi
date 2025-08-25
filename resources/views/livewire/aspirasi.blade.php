@@ -77,8 +77,8 @@
         </style>
     @endpush
     <flux:fieldset>
-        <flux:legend>Daftar Wakil Rektor</flux:legend>
-        <flux:description>Berikut adalah data Wakil Rektor Universitas Annuqayah.</flux:description>
+        <flux:legend>Daftar Aspirasi</flux:legend>
+        <flux:description>Berikut adalah aspirasi mahasiswa yang diajukan.</flux:description>
         <div class="min-h-screen">
             <div class="flex justify-between items-center mb-4 ">
                 <div class="flex gap-2">
@@ -416,11 +416,13 @@
                                                     @endif
                                                 @endcan
                                                 <flux:separator />
-                                                <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
-                                                    size="xs" icon="pencil-square"
-                                                    class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                    Edit
-                                                </flux:button>
+                                                @can('is_mahasiswa')
+                                                    <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
+                                                        size="xs" icon="pencil-square"
+                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                        Edit
+                                                    </flux:button>
+                                                @endcan
                                                 <flux:button
                                                     wire:click="confirmDelete({{ $data_aspirasi->id_aspirasi }})"
                                                     size="xs" icon="trash" variant="danger"

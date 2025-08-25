@@ -14,7 +14,7 @@ class Profile extends Component
 
     public string $nim = '';
 
-    public string $prodi = '';
+    public string $prodi;
     /**
      * Mount the component.
      */
@@ -22,7 +22,7 @@ class Profile extends Component
     {
         $this->full_name = Auth::user()->full_name;
         $this->nim = Auth::user()->nim;
-        $this->prodi = Auth::user()->prodi;
+        $this->prodi = Auth::user()->prodi ?? '';
     }
 
     /**
