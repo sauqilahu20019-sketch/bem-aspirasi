@@ -6,8 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -43,9 +42,9 @@ return new class extends Migration
 
         $admin = [
             'full_name' => 'Admin',
-            'nim' => 'ADM-BEM-KM',
+            'nim' => 'ADM-BEM',
             'role_id' => 1,
-            'password' => Hash::make('password@123')
+            'password' => Hash::make('123123')
         ];
         User::create($admin);
     }

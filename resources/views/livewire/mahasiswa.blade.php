@@ -38,26 +38,28 @@
                     </div>
                     <flux:input icon="credit-card" :invalid="$errors->has('nim')" wire:model="nim" label="NIM"
                         placeholder="NIDN" />
-                    <flux:input icon="user" :invalid="$errors->has('full_name')" wire:model="full_name" label="Nama Lengkap"
-                        placeholder="Nama Lengkap" />
+                    <flux:input icon="user" :invalid="$errors->has('full_name')" wire:model="full_name"
+                        label="Nama Lengkap" placeholder="Nama Lengkap" />
                     <flux:input icon="key" :invalid="$errors->has('password')" wire:model="password"
                         label="Password" placeholder="Password" type='password' viewable />
                     <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
-                        <flux:select.option value="Ilmu Al-Quran & Tafsir">Ilmu Al-Quran & Tafsir</flux:select.option>
-                        <flux:select.option value="Tasawuf dan Psikoterapi">Tasawuf dan Psikoterapi</flux:select.option>
-                        <flux:select.option value="Hukum Keluarga Islam">Hukum Keluarga Islam</flux:select.option>
-                        <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
-                        <flux:select.option value="Pendidikan Agama Islam">Pendidikan Agama Islam</flux:select.option>
                         <flux:select.option value="Ekonomi Syariah">Ekonomi Syariah</flux:select.option>
-                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini</flux:select.option>
                         <flux:select.option value="Perbankan Syariah">Perbankan Syariah</flux:select.option>
                         <flux:select.option value="Hukum Ekonomi Syariah">Hukum Ekonomi Syariah</flux:select.option>
+                        <flux:select.option value="Hukum Keluarga Islam">Hukum Keluarga Islam</flux:select.option>
+                        <flux:select.option value="Pendidikan Agama Islam">Pendidikan Agama Islam</flux:select.option>
                         <flux:select.option value="Pendidikan Bahasa Arab">Pendidikan Bahasa Arab</flux:select.option>
+                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini
+                        </flux:select.option>
+                        <flux:select.option value="Ilmu Al-Quran & Tafsir">Ilmu Al-Quran & Tafsir</flux:select.option>
+                        <flux:select.option value="Tasawuf dan Psikoterapi">Tasawuf dan Psikoterapi</flux:select.option>
                         <flux:select.option value="Biologi">Biologi</flux:select.option>
-                        <flux:select.option value="Matematika">Matematika</flux:select.option>
                         <flux:select.option value="Kimia">Kimia</flux:select.option>
+                        <flux:select.option value="Matematika">Matematika</flux:select.option>
+                        <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
                         <flux:select.option value="Teknologi Informasi">Teknologi Informasi</flux:select.option>
-                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian</flux:select.option>
+                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian
+                        </flux:select.option>
                         <flux:select.option value="Bisnis Digital">Bisnis Digital</flux:select.option>
                         <flux:select.option value="Ilmu Komunikasi">Ilmu Komunikasi</flux:select.option>
                     </flux:select>
@@ -85,7 +87,8 @@
                         <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
                         <flux:select.option value="Pendidikan Agama Islam">Pendidikan Agama Islam</flux:select.option>
                         <flux:select.option value="Ekonomi Syariah">Ekonomi Syariah</flux:select.option>
-                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini</flux:select.option>
+                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini
+                        </flux:select.option>
                         <flux:select.option value="Perbankan Syariah">Perbankan Syariah</flux:select.option>
                         <flux:select.option value="Hukum Ekonomi Syariah">Hukum Ekonomi Syariah</flux:select.option>
                         <flux:select.option value="Pendidikan Bahasa Arab">Pendidikan Bahasa Arab</flux:select.option>
@@ -93,7 +96,8 @@
                         <flux:select.option value="Matematika">Matematika</flux:select.option>
                         <flux:select.option value="Kimia">Kimia</flux:select.option>
                         <flux:select.option value="Teknologi Informasi">Teknologi Informasi</flux:select.option>
-                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian</flux:select.option>
+                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian
+                        </flux:select.option>
                         <flux:select.option value="Bisnis Digital">Bisnis Digital</flux:select.option>
                         <flux:select.option value="Ilmu Komunikasi">Ilmu Komunikasi</flux:select.option>
                     </flux:select>

@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Mahasiswa extends Component
 {
+    use WithPagination;
     public $perPage = 10;
-    public  $search = '';
+    public $search = '';
 
     public $nim;
     public $full_name;
@@ -23,7 +25,7 @@ class Mahasiswa extends Component
 
     public function store()
     {
-       $validated = $this->validate([
+        $validated = $this->validate([
             'nim' => ['required', 'string', 'unique:' . User::class],
             'full_name' => ['required', 'string', 'max:255'],
             'prodi' => ['required', 'string', 'max:255'],
@@ -44,18 +46,20 @@ class Mahasiswa extends Component
 
         $validated['role_id'] = 7;
         $validated['password'] = Hash::make($validated['password']);
-        try{
+        try {
             User::create($validated);
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->dispatch(
+                'alert',
                 type: 'success',
                 title: 'Sukses',
                 text: 'Admin berhasil ditambahkan!'
             );
             $this->reset();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->dispatch(
+                'alert',
                 type: 'error',
                 title: 'Error',
                 timer: 5000,
@@ -89,18 +93,20 @@ class Mahasiswa extends Component
             'nim.string' => 'NIDN harus berupa Text!',
             'nim.unique' => 'NIDN sudah digunakan!',
         ]);
-        try{
+        try {
             $this->admin->update($validated);
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->dispatch(
+                'alert',
                 type: 'success',
                 title: 'Sukses',
                 text: 'Admin berhasil diupdate!'
             );
             $this->reset();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->dispatch(
+                'alert',
                 type: 'error',
                 title: 'Error',
                 timer: 5000,

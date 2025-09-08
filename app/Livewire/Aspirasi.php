@@ -17,13 +17,12 @@ class Aspirasi extends Component
 
     public $perPage = 10;
     public $search = '';
-    public $aspirasi;
     public $ditujukan_ke;
-    public $add_aspirasi;
-    public $add_ditujukan_ke;
     public ModelsAspirasi $model_aspirasi;
     public $data_warek;
     public $note;
+    public $searchWarek = null;
+    public $searchWarekResults = null;
 
     public function render()
     {
@@ -33,7 +32,7 @@ class Aspirasi extends Component
             ->when($this->search, function ($query) {
                 $query->whereHas('pengaju', function ($q) {
                     $q->where('full_name', 'like', '%' . $this->search . '%')
-                      ->orWhere('nim', 'like', '%' . $this->search . '%');
+                        ->orWhere('nim', 'like', '%' . $this->search . '%');
                 });
             })
             ->latest()
@@ -44,68 +43,58 @@ class Aspirasi extends Component
         ]);
     }
 
-    public function store()
+    public function updatedSearchWarek()
     {
-        $validated = $this->validate([
-            'ditujukan_ke' => ['required'],
-            'aspirasi' => ['required', 'string', 'max:3000'],
-        ], [
-            'ditujukan_ke.required' => 'Tujuan aspirasi harus dipilih!',
-            'aspirasi.required' => 'Aspirasi harus diisi!',
-            'aspirasi.max' => 'Aspirasi maksimal 3000 karakter',
-            'aspirasi.string' => 'Aspirasi harus berupa teks!',
-        ]);
+        $validated = $this->validate(['searchWarek' => 'string|max:255']);
 
-        $validated['diajukan_oleh'] = Auth::user()->id_user;
-        $validated['status'] = 'pending';
-
-        try {
-            ModelsAspirasi::create($validated);
-            Flux::modals()->close();
-            $this->dispatch('alert', type: 'success', title: 'Sukses', text: 'Aspirasi berhasil ditambahkan!');
-            $this->reset(['ditujukan_ke', 'aspirasi']);
-        } catch (\Exception $e) {
-            Flux::modals()->close();
-            $this->dispatch('alert', type: 'error', title: 'Error', timer: 5000, text: $e->getMessage());
+        if (strlen($validated['searchWarek']) >= 2) {
+            $this->searchWarekResults = User::onlyWarek()
+                ->where(function ($q) {
+                    $q->where('nidn', 'like', '%' . $this->searchWarek . '%')
+                        ->orWhere('full_name', 'like', '%' . $this->searchWarek . '%');
+                })
+                ->get();
+        } else {
+            $this->searchWarekResults = null;
         }
     }
 
-    public function edit(ModelsAspirasi $aspirasi)
+    public function assignWarek(ModelsAspirasi $aspirasi)
     {
         $this->model_aspirasi = $aspirasi;
-        $this->ditujukan_ke = $aspirasi->ditujukan_ke;
-        $this->aspirasi = $aspirasi->aspirasi;
-        Flux::modal('edit-aspirasi')->show();
+        Flux::modal('assign-warek')->show();
     }
 
-    public function update()
+    public function setWarek(User $user)
     {
-        $validated = $this->validate([
-            'ditujukan_ke' => ['required'],
-            'aspirasi' => ['required', 'string', 'max:3000'],
-        ], [
-            'ditujukan_ke.required' => 'Tujuan aspirasi harus dipilih!',
-            'aspirasi.required' => 'Aspirasi harus diisi!',
-            'aspirasi.max' => 'Aspirasi maksimal 3000 karakter',
-            'aspirasi.string' => 'Aspirasi harus berupa teks!',
-        ]);
-
-        try {
-            $this->model_aspirasi->update($validated);
-            Flux::modals()->close();
-            $this->dispatch('alert', type: 'success', title: 'Sukses', text: 'Data aspirasi berhasil diupdate!');
-            $this->reset(['ditujukan_ke', 'aspirasi']);
-        } catch (\Exception $e) {
-            Flux::modals()->close();
-            $this->dispatch('alert', type: 'error', title: 'Error', timer: 5000, text: $e->getMessage());
+        if (!$this->model_aspirasi) {
+            $this->dispatch(
+                'alert',
+                type: 'error',
+                title: 'Gagal!',
+                text: 'Belum ada Warek yang dipilih.'
+            );
+            return;
         }
+        $this->model_aspirasi->update([
+            'ditujukan_ke' => $user->id_user
+        ]);
+        $this->refreshData();
+        Flux::modals()->close();
+
+        $this->dispatch(
+            'alert',
+            type: 'success',
+            title: 'Berhasil!',
+            text: 'Dosen berhasil ditetapkan sebagai DPL.'
+        );
     }
 
     #[On('delete')]
     public function delete(ModelsAspirasi $id)
     {
         $id->delete();
-
+        $this->refreshData();
         $this->dispatch('alert', type: 'success', title: "Sukses", text: "Aspirasi berhasil dihapus!");
     }
 
@@ -127,17 +116,20 @@ class Aspirasi extends Component
         ]);
         $validated['aspirasi_id'] = $this->model_aspirasi->id_aspirasi;
         $validated['oleh'] = Auth::user()->id_user;
-        try{
+        try {
             AspirasiNote::create($validated);
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->refreshData();
+            $this->dispatch(
+                'alert',
                 type: 'success',
                 title: 'Sukses',
                 text: 'Catatan berhasil disimpan!'
             );
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             Flux::modals()->close();
-            $this->dispatch('alert',
+            $this->dispatch(
+                'alert',
                 type: 'error',
                 title: 'Error',
                 time: 5000,
@@ -149,15 +141,26 @@ class Aspirasi extends Component
     public function approveAspirasi(ModelsAspirasi $aspirasi)
     {
         $aspirasi->update(['status' => 'accepted']);
+        $this->refreshData();
     }
 
     public function rejectAspirasi(ModelsAspirasi $aspirasi)
     {
         $aspirasi->update(['status' => 'rejected']);
+        $this->refreshData();
     }
 
     public function markAsPending(ModelsAspirasi $aspirasi)
     {
         $aspirasi->update(['status' => 'pending']);
+        $this->refreshData();
+    }
+
+    public function refreshData()
+    {
+        $this->search = '';
+        $this->ditujukan_ke = '';
+        $this->data_warek = '';
+        $this->note = '';
     }
 }

@@ -14,6 +14,7 @@ class Aspirasi extends Model
     protected $fillable = [
         'diajukan_oleh',
         'ditujukan_ke',
+        'ke_warek',
         'aspirasi',
         'status'
     ];

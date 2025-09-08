@@ -112,14 +112,15 @@
                         <flux:heading size="lg">Buat Aspirasi</flux:heading>
                         <flux:text class="mt-2">Sampaikan aspirasi anda terkait Universitas Annuqayah!.</flux:text>
                     </div>
-                    <flux:select wire:model='add_ditujukan_ke' :invalid="$errors->has('add_ditujukan_ke')">
+                    <flux:select wire:model='ke_warek' :invalid="$errors->has('ke_warek')">
                         <flux:select.option value="">Jabatan Warek</flux:select.option>
                         @foreach ($data_warek as $warek_data)
-                            <flux:select.option value="{{ $warek_data->id_user }}">{{ $warek_data->role->role_name }} -
+                            <flux:select.option value="{{ $warek_data->role->role_name }}">
+                                {{ $warek_data->role->role_name }} -
                                 {{ $warek_data->full_name }}</flux:select.option>
                         @endforeach
                     </flux:select>
-                    <flux:textarea :invalid="$errors->has('add_aspirasi')" wire:model="add_aspirasi" label="Aspirasi" />
+                    <flux:textarea :invalid="$errors->has('aspirasi')" wire:model="aspirasi" label="Aspirasi" />
                     <div class="flex">
                         <flux:spacer />
                         <flux:button type="submit" variant="primary">Simpan</flux:button>
@@ -157,10 +158,11 @@
                         <flux:heading size="lg">Update Data Aspirasi</flux:heading>
                         <flux:text class="mt-2">Update data aspirasi mahasiswa pada sistem anda!.</flux:text>
                     </div>
-                    <flux:select wire:model='ditujukan_ke' :invalid="$errors->has('ditujukan_ke')">
+                    <flux:select wire:model='ke_warek' :invalid="$errors->has('ditujukan_ke')">
                         <flux:select.option value="">Jabatan Warek</flux:select.option>
                         @foreach ($data_warek as $warek_data)
-                            <flux:select.option value="{{ $warek_data->id_user }}">{{ $warek_data->role->role_name }} -
+                            <flux:select.option value="{{ $warek_data->role->role_name }}">
+                                {{ $warek_data->role->role_name }} -
                                 {{ $warek_data->full_name }}</flux:select.option>
                         @endforeach
                     </flux:select>
@@ -190,8 +192,7 @@
                                 <td class="px-2 py-2">{{ $loop->iteration }}</td>
                                 <td class="px-2 py-2 text-[0.7rem]">{{ $data_aspirasi->aspirasi }}</td>
                                 <td class="px-2 py-2 text-[0.7rem]">
-                                    {{ $data_aspirasi->yangDituju->full_name }} -
-                                    {{ $data_aspirasi->yangDituju->role->role_name }}
+                                    {{ $data_aspirasi->ke_warek }}
                                 </td>
                                 <td class="px-2 py-2">
                                     <div class="relative">

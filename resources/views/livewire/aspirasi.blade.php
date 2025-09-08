@@ -172,6 +172,65 @@
                 </form>
             </flux:modal>
 
+            {{-- Modal Assign Warek --}}
+            <flux:modal name="assign-warek" class="w-lg">
+                {{-- Sticky Search Input --}}
+                <div class="sticky top-0 z-40 bg-white dark:bg-zinc-800 px-4 pt-4 pb-2">
+                    <flux:input type="text" variant="filled" icon="magnifying-glass" wire:model.live="searchReviewer"
+                        placeholder="Cari Dosen Warek..." class="w-full" size="md" clearable />
+                </div>
+
+                {{-- Scrollable Results --}}
+                <div class="h-[50vh] overflow-y-auto px-4 pb-4" id="container-dpl-results">
+                    <div class="text-xs space-y-2">
+                        {{-- Loading --}}
+                        @if ($searchWarek && $searchWarekResults === null)
+                            @foreach ([1, 2, 3] as $i)
+                                <div class="animate-pulse grid grid-cols-3 gap-2 w-full px-4 py-3 rounded-md">
+                                    <div class="h-5 bg-gray-200 dark:bg-zinc-700 rounded col-span-1">
+                                    </div>
+                                    <div class="h-5 bg-gray-200 dark:bg-zinc-700 rounded col-span-2">
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            {{-- Results --}}
+                        @elseif($searchWarek && $searchWarekResults->isNotEmpty())
+                            @foreach ($searchWarekResults as $warek)
+                                <button wire:click="setWarek({{ $warek->id_user }})"
+                                    class="grid grid-cols-4 cursor-pointer rounded-md dark:text-zinc-400 gap-2 text-zinc-500 w-full text-left px-4 py-3 bg-gray-100 dark:bg-zinc-900 hover:scale-[1.02] hover:bg-blue-200 dark:hover:bg-zinc-700 hover:shadow-md border-l-2 border-transparent hover:border-blue-400 dark:hover:border-zinc-600">
+                                    <span class="font-medium dark:text-white text-zinc-800">{{ $warek->nim }}</span>
+                                    <span class="col-span-2">{{ $warek->full_name }}</span>
+                                    <span class="text-end text-xs">{{ $warek->role->role_name }}</span>
+                            @endforeach
+
+                            {{-- No Results --}}
+                        @elseif($searchWarek)
+                            <div class="py-4 text-center">
+                                <p class="text-sm text-gray-500 dark:text-zinc-400">
+                                    🔍 Tidak ditemukan dosen</p>
+                            </div>
+
+                            {{-- Optional default state --}}
+                        @elseif($data_warek)
+                            @foreach ($data_warek as $result)
+                                <button wire:click="setWarek({{ $result->id_user }})"
+                                    class="grid grid-cols-4 cursor-pointer rounded-md dark:text-zinc-400 gap-2 text-zinc-500 w-full text-left px-4 py-3 bg-gray-100 dark:bg-zinc-900 hover:scale-[1.02] hover:bg-blue-200 dark:hover:bg-zinc-700 hover:shadow-md border-l-2 border-transparent hover:border-blue-400 dark:hover:border-zinc-600">
+                                    <span class="font-medium dark:text-white text-zinc-800">{{ $result->nim }}</span>
+                                    <span class="col-span-2">{{ $result->full_name }}</span>
+                                    <span class="text-end text-xs">{{ $result->role->role_name }}</span>
+                                </button>
+                            @endforeach
+                        @else
+                            <div class="py-4 text-center">
+                                <p class="text-sm text-gray-500 dark:text-zinc-400">
+                                    👋 Masukkan nama/NIDN Warek</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </flux:modal>
+
             <div class="w-full overflow-x-auto border border-gray-300 dark:border-gray-700 rounded-md">
                 <table class="min-w-[800px] w-full text-xs divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
@@ -182,6 +241,7 @@
                             <th class="px-2 py-2 text-left">Ditujukan Ke</th>
                             <th class="px-2 py-2 text-left">Catatan</th>
                             <th class="px-2 py-2 text-left">Status</th>
+                            <th class="px-2 py-2 text-left">Tetapkan Atasan</th>
                             <th class="px-2 py-2 text-left">Aksi</th>
                         </tr>
                     </thead>
@@ -199,8 +259,7 @@
                                 </td>
                                 <td class="px-2 py-2 text-[0.7rem]">{{ $data_aspirasi->aspirasi }}</td>
                                 <td class="px-2 py-2 text-[0.7rem]">
-                                    {{ $data_aspirasi->yangDituju->full_name }} -
-                                    {{ $data_aspirasi->yangDituju->role->role_name }}
+                                    {{ $data_aspirasi->ke_warek }}
                                 </td>
                                 <td class="px-2 py-2">
                                     <div class="relative">
@@ -341,6 +400,9 @@
                                         </span>
                                     @endif
                                 </td>
+                                <td class="px-2 py-2">
+                                    {{ $data_aspirasi->yangDituju ? $data_aspirasi->yangDituju->role->role_name . ' - ' . $data_aspirasi->yangDituju->full_name : '-' }}
+                                </td>
                                 <td class="px-2 py-2 space-x-1">
                                     <flux:dropdown position="bottom" align="start">
                                         <button
@@ -350,7 +412,7 @@
                                         <flux:menu class="w-10">
                                             <div class="flex flex-col space-y-1">
                                                 <!-- Pending State Actions -->
-                                                @can('is_warek')
+                                                @can('is_adminOrWarek')
                                                     @if ($data_aspirasi->status === 'pending')
                                                         <flux:button
                                                             wire:click="approveAspirasi({{ $data_aspirasi->id_aspirasi }})"
@@ -416,13 +478,12 @@
                                                     @endif
                                                 @endcan
                                                 <flux:separator />
-                                                @can('is_mahasiswa')
-                                                    <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
-                                                        size="xs" icon="pencil-square"
-                                                        class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
-                                                        Edit
-                                                    </flux:button>
-                                                @endcan
+                                                <flux:button
+                                                    wire:click="assignWarek({{ $data_aspirasi->id_aspirasi }})"
+                                                    size="xs" icon="academic-cap"
+                                                    class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
+                                                    Tetapkan Warek
+                                                </flux:button>
                                                 <flux:button
                                                     wire:click="confirmDelete({{ $data_aspirasi->id_aspirasi }})"
                                                     size="xs" icon="trash" variant="danger"

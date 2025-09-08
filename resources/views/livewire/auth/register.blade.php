@@ -1,29 +1,32 @@
-<div class="flex flex-col md:flex-row bg-white dark:bg-gray-900">
-    <!-- Container 2: Ilustrasi SVG Animasi (now on left) -->
-    <div
-        class="hidden md:block flex-col w-full md:w-1/2 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/30 md:flex items-center justify-center p-4  overflow-hidden order-1 md:order-none">
+<div class="flex flex-col md:flex-row bg-white dark:bg-gray-900 items-center min-h-screen">
+    <!-- Container 1: Ilustrasi SVG Animasi (now on left) -->
+    <div class="relative text-center max-w-lg mx-auto">
+        <!-- Logo -->
         <a href="{{ route('home') }}" class="flex md:mb-5  flex-col items-center gap-1" wire:navigate>
             <span class="flex items-center justify-center rounded-md">
                 <x-app-logo-icon class="w-20 md:w-56" />
             </span>
         </a>
-        <div class="text-center max-w-lg">
-            <!-- Animated Welcome Text -->
-            <h1 class="text-xl md:text-2xl font-bold text-indigo-800 dark:text-indigo-100 leading-snug">
-                <span id="typing-title" class="relative inline-block">
-                    <span
-                        class="absolute -right-2 top-0 w-0.5 h-6 bg-indigo-600 dark:bg-indigo-300 animate-pulse"></span>
-                </span>
-            </h1>
 
-            <!-- Animated Subtitle -->
-            <h3 class="text-sm md:text-base text-indigo-600 dark:text-indigo-300/90 font-medium">
-                <span id="typing-subtitle" class="opacity-0"></span>
-            </h3>
-        </div>
+        <!-- Animated Welcome Text -->
+        <h1 class="text-3xl md:text-3xl font-bold text-indigo-800 dark:text-indigo-100 leading-snug">
+            <span id="typing-title" class="relative inline-block">
+                <span class="typing-cursor"></span>
+            </span>
+        </h1>
+
+        <!-- Animated Subtitle -->
+        <h3 class="text-sm md:text-xl text-indigo-600 dark:text-indigo-300/90 font-medium">
+            <span id="typing-subtitle" class="opacity-0"></span>
+        </h3>
+
+        <!-- Additional Info Text -->
+        <p class="text-sm md:text-xl text-indigo-500 dark:text-indigo-400/80">
+            <span id="typing-info" class="opacity-0"></span>
+        </p>
     </div>
 
-    <!-- Container 1: Form Daftar (now on right) -->
+    <!-- Container 2: Form Daftar (now on right) -->
     <div class="w-full md:w-1/2 flex items-center justify-center p-6 order-2 md:order-none">
         <div class="w-full max-w-md space-y-6">
             <!-- Judul -->
@@ -109,7 +112,25 @@
 
                 <div>
                     <flux:select wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
-                        <flux:select.option value="teknologi  informasi">Teknologi Informasi</flux:select.option>
+                        <flux:select.option value="Ekonomi Syariah">Ekonomi Syariah</flux:select.option>
+                        <flux:select.option value="Perbankan Syariah">Perbankan Syariah</flux:select.option>
+                        <flux:select.option value="Hukum Ekonomi Syariah">Hukum Ekonomi Syariah</flux:select.option>
+                        <flux:select.option value="Hukum Keluarga Islam">Hukum Keluarga Islam</flux:select.option>
+                        <flux:select.option value="Pendidikan Agama Islam">Pendidikan Agama Islam</flux:select.option>
+                        <flux:select.option value="Pendidikan Bahasa Arab">Pendidikan Bahasa Arab</flux:select.option>
+                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini
+                        </flux:select.option>
+                        <flux:select.option value="Ilmu Al-Quran & Tafsir">Ilmu Al-Quran & Tafsir</flux:select.option>
+                        <flux:select.option value="Tasawuf dan Psikoterapi">Tasawuf dan Psikoterapi</flux:select.option>
+                        <flux:select.option value="Biologi">Biologi</flux:select.option>
+                        <flux:select.option value="Kimia">Kimia</flux:select.option>
+                        <flux:select.option value="Matematika">Matematika</flux:select.option>
+                        <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
+                        <flux:select.option value="Teknologi Informasi">Teknologi Informasi</flux:select.option>
+                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian
+                        </flux:select.option>
+                        <flux:select.option value="Bisnis Digital">Bisnis Digital</flux:select.option>
+                        <flux:select.option value="Ilmu Komunikasi">Ilmu Komunikasi</flux:select.option>
                     </flux:select>
                     @error('prodi')
                         <div class="flex items-center pt-1">
@@ -189,8 +210,9 @@
 @push('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const titleText = "BEM-KM Universitas Annuqayah";
-            const subtitleText = "Kabinet Garda Muda";
+            const titleText = "Welcome to SIAP BEM";
+            const subtitleText = "Sistem Informasi Aspirasi Mahasiswa BEM-KM";
+            const infoText = "Universitas Annuqayah";
 
             // Clear existing content and add cursor
             const titleElement = document.getElementById('typing-title');
@@ -213,8 +235,8 @@
                 } else {
                     // When title finishes, start subtitle
                     setTimeout(() => {
-                        document.getElementById('typing-subtitle').classList.remove('opacity-0');
                         const subtitleElement = document.getElementById('typing-subtitle');
+                        subtitleElement.classList.remove('opacity-0');
                         subtitleElement.innerHTML = '<span class="typing-cursor">|</span>';
 
                         let j = 0;
@@ -234,6 +256,39 @@
                                 // Remove cursor when done
                                 const cursor = subtitleElement.querySelector('.typing-cursor');
                                 if (cursor) cursor.remove();
+
+                                // Start typing info text
+                                setTimeout(() => {
+                                    const infoElement = document.getElementById(
+                                        'typing-info');
+                                    infoElement.classList.remove('opacity-0');
+                                    infoElement.innerHTML =
+                                        '<span class="typing-cursor">|</span>';
+
+                                    let k = 0;
+                                    const typeInfo = () => {
+                                        if (k < infoText.length) {
+                                            // Insert character before cursor
+                                            const charSpan = document.createElement(
+                                                'span');
+                                            charSpan.textContent = infoText.charAt(k);
+                                            charSpan.className = 'typed-char';
+
+                                            const cursor = infoElement.querySelector(
+                                                '.typing-cursor');
+                                            infoElement.insertBefore(charSpan, cursor);
+
+                                            k++;
+                                            setTimeout(typeInfo, 70);
+                                        } else {
+                                            // Remove cursor when done
+                                            const cursor = infoElement.querySelector(
+                                                '.typing-cursor');
+                                            if (cursor) cursor.remove();
+                                        }
+                                    };
+                                    typeInfo();
+                                }, 500);
                             }
                         };
                         typeSubtitle();
