@@ -27,13 +27,32 @@
                     </div>
                 @endif --}}
             </div>
-            <div>
-                <flux:select :label="__('Program Studi')" wire:model="prodi" :invalid="$errors->has('prodi')" placeholder="Program Studi">
-                    <flux:select.option value="Teknik Hasil Pertanian">Teknik Hasil Pertanian</flux:select.option>
-                    <flux:select.option value="Teknologi  Informasi">Teknologi Informasi</flux:select.option>
-                    <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
-                </flux:select>
-            </div>
+            @can('is_mahasiswa')
+                <div>
+                    <flux:select :label="__('Program Studi')" wire:model="prodi" :invalid="$errors->has('prodi')"
+                        placeholder="Program Studi">
+                        <flux:select.option value="Ekonomi Syariah">Ekonomi Syariah</flux:select.option>
+                        <flux:select.option value="Perbankan Syariah">Perbankan Syariah</flux:select.option>
+                        <flux:select.option value="Hukum Ekonomi Syariah">Hukum Ekonomi Syariah</flux:select.option>
+                        <flux:select.option value="Hukum Keluarga Islam">Hukum Keluarga Islam</flux:select.option>
+                        <flux:select.option value="Pendidikan Agama Islam">Pendidikan Agama Islam</flux:select.option>
+                        <flux:select.option value="Pendidikan Bahasa Arab">Pendidikan Bahasa Arab</flux:select.option>
+                        <flux:select.option value="Pendidikan Islam Anak Usia Dini">Pendidikan Islam Anak Usia Dini
+                        </flux:select.option>
+                        <flux:select.option value="Ilmu Al-Quran & Tafsir">Ilmu Al-Quran & Tafsir</flux:select.option>
+                        <flux:select.option value="Tasawuf dan Psikoterapi">Tasawuf dan Psikoterapi</flux:select.option>
+                        <flux:select.option value="Biologi">Biologi</flux:select.option>
+                        <flux:select.option value="Kimia">Kimia</flux:select.option>
+                        <flux:select.option value="Matematika">Matematika</flux:select.option>
+                        <flux:select.option value="Teknik Sipil">Teknik Sipil</flux:select.option>
+                        <flux:select.option value="Teknologi Informasi">Teknologi Informasi</flux:select.option>
+                        <flux:select.option value="Teknologi Hasil Pertanian">Teknologi Hasil Pertanian
+                        </flux:select.option>
+                        <flux:select.option value="Bisnis Digital">Bisnis Digital</flux:select.option>
+                        <flux:select.option value="Ilmu Komunikasi">Ilmu Komunikasi</flux:select.option>
+                    </flux:select>
+                </div>
+            @endcan
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">

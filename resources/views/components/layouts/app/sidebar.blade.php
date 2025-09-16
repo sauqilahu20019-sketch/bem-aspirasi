@@ -13,17 +13,22 @@
             <x-app-logo />
         </a>
 
-        {{-- <flux:navlist variant="outline">
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    @can('is_warek')
-                        <flux:navlist.item icon="clipboard-document-check" :href="route('warek.aspirasi')" :current="request()->routeIs('warek.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
-                    @endcan
-                    @can('is_mahasiswa')
-                        <flux:navlist.item icon="clipboard-document-check" :href="route('mahasiswa.aspirasi')" :current="request()->routeIs('mahasiswa.aspirasi')" wire:navigate>{{ __('Aspirasi') }}</flux:navlist.item>
-                    @endcan
-                </flux:navlist.group>
-            </flux:navlist> --}}
+        <flux:navlist variant="outline">
+            <flux:navlist.group :heading="__('Platform')" class="grid">
+                <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"
+                    wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                @can('is_warek')
+                    <flux:navlist.item icon="clipboard-document-check" :href="route('warek.aspirasi')"
+                        :current="request()->routeIs('warek.aspirasi')" wire:navigate>{{ __('Aspirasi') }}
+                    </flux:navlist.item>
+                @endcan
+                @can('is_mahasiswa')
+                    <flux:navlist.item icon="clipboard-document-check" :href="route('mahasiswa.aspirasi')"
+                        :current="request()->routeIs('mahasiswa.aspirasi')" wire:navigate>{{ __('Aspirasi') }}
+                    </flux:navlist.item>
+                @endcan
+            </flux:navlist.group>
+        </flux:navlist>
 
         @can('is_admin')
             <flux:navlist variant="outline">

@@ -96,34 +96,7 @@
                         </flux:select>
                     </div>
                 </div>
-                <flux:modal.trigger name="add-aspirasi" class="mb-4">
-                    <div class="flex gap-2">
-                        <flux:button icon="plus-circle" size="xs" class="shadow-sm">Tambah</flux:button>
-                    </div>
-                </flux:modal.trigger>
             </div>
-
-            {{-- Add Aspirasi Modal --}}
-            <flux:modal name="add-aspirasi" class="md:w-xl">
-                <form wire:submit.prevent="store" class="space-y-6">
-                    <div>
-                        <flux:heading size="lg">Buat Aspirasi</flux:heading>
-                        <flux:text class="mt-2">Sampaikan aspirasi anda terkait Universitas Annuqayah!.</flux:text>
-                    </div>
-                    <flux:select wire:model='add_ditujukan_ke' :invalid="$errors->has('add_ditujukan_ke')">
-                        <flux:select.option value="">Jabatan Warek</flux:select.option>
-                        @foreach ($data_warek as $warek_data)
-                            <flux:select.option value="{{ $warek_data->id_user }}">{{ $warek_data->role->role_name }} -
-                                {{ $warek_data->full_name }}</flux:select.option>
-                        @endforeach
-                    </flux:select>
-                    <flux:textarea :invalid="$errors->has('add_aspirasi')" wire:model="add_aspirasi" label="Aspirasi" />
-                    <div class="flex">
-                        <flux:spacer />
-                        <flux:button type="submit" variant="primary">Simpan</flux:button>
-                    </div>
-                </form>
-            </flux:modal>
 
             {{-- Modal Aspirasi Notes --}}
             <flux:modal name="aspirasi-notes" class="md:w-xl" max-width='1xl'>
@@ -411,10 +384,9 @@
                                                         Komentar
                                                     </flux:button>
                                                 @endif
-                                                <flux:separator/>
+                                                <flux:separator />
                                                 @can('is_mahasiswa')
-                                                    <flux:button
-                                                        wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
+                                                    <flux:button wire:click="edit({{ $data_aspirasi->id_aspirasi }})"
                                                         size="xs" icon="pencil-square"
                                                         class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
                                                         Edit
@@ -422,8 +394,7 @@
                                                 @endcan
                                                 <flux:button
                                                     wire:click="confirmDelete({{ $data_aspirasi->id_aspirasi }})"
-                                                    size="xs" icon="trash"
-                                                    variant="danger"
+                                                    size="xs" icon="trash" variant="danger"
                                                     class="!text-[0.65rem] cursor-pointer text-green-600 hover:bg-green-50 dark:hover:bg-green-900/10 transition-all hover:scale-[1.02]">
                                                     Hapus
                                                 </flux:button>

@@ -1,7 +1,7 @@
 <x-layouts.app.sidebar :title="$title ?? null">
     <flux:main>
         <!-- Breadcumb -->
-        <ol class="flex items-center whitespace-nowrap">
+        {{-- <ol class="flex items-center whitespace-nowrap">
             <li class="inline-flex items-center">
                 <a class="flex items-center text-sm text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600"
                     href="#">
@@ -41,7 +41,7 @@
             <li class="inline-flex items-center text-sm font-semibold text-gray-800 truncate" aria-current="page">
                 Application
             </li>
-        </ol>
+        </ol> --}}
         {{ $slot }}
     </flux:main>
 </x-layouts.app.sidebar>
