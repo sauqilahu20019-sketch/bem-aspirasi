@@ -113,7 +113,7 @@
                         <flux:text class="mt-2">Sampaikan aspirasi anda terkait Universitas Annuqayah!.</flux:text>
                     </div>
                     <flux:select wire:model='add_ditujukan_ke' :invalid="$errors->has('add_ditujukan_ke')">
-                        <flux:select.option value="">Jabatan Warek</flux:select.option>
+                        {{-- <flux:select.option value="">Jabatan Warek</flux:select.option> --}}
                         @foreach ($data_warek as $warek_data)
                             <flux:select.option value="{{ $warek_data->id_user }}">{{ $warek_data->role->role_name }} -
                                 {{ $warek_data->full_name }}</flux:select.option>
@@ -144,6 +144,29 @@
                     <div class="space-y-2">
                         <flux:textarea wire:model="note" label="Note" rows="4"
                             placeholder="Berikan catatan terkait aspirasi yang diajukan..."
+                            :invalid="$errors->has('note')" required></flux:textarea>
+                    </div>
+                    <flux:button type='submit'>Submit</flux:button>
+                </form>
+            </flux:modal>
+
+            {{-- Modal Catatan Reject --}}
+            <flux:modal name="reject-notes" class="md:w-xl" max-width='1xl'>
+                <form wire:submit.prevent="rejectAspirasi" class="space-y-6">
+                    <!-- Header Section -->
+                    <div class="text-center">
+                        <flux:legend>
+                            Catatan
+                        </flux:legend>
+                        <flux:text class="text-gray-600 dark:text-gray-400">
+                            Berikan ulasan atau catatan Aspirasi ditolak!
+                        </flux:text>
+                    </div>
+
+                    <!-- Note Field -->
+                    <div class="space-y-2">
+                        <flux:textarea wire:model="note" label="Note" rows="4"
+                            placeholder="Lampirkan catatan atau ulasan terkait Aspirasi yang ditolak..."
                             :invalid="$errors->has('note')" required></flux:textarea>
                     </div>
                     <flux:button type='submit'>Submit</flux:button>
@@ -421,7 +444,7 @@
                                                             Terima
                                                         </flux:button>
                                                         <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                            wire:click="commentReject({{ $data_aspirasi->id_aspirasi }})"
                                                             size="xs" icon="x-circle"
                                                             class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
                                                             Tolak
@@ -440,6 +463,12 @@
                                                             size="xs" icon="clock"
                                                             class="!text-[0.65rem] cursor-pointer text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hover:scale-[1.02]">
                                                             Pending
+                                                        </flux:button>
+                                                        <flux:button
+                                                            wire:click="commentReject({{ $data_aspirasi->id_aspirasi }})"
+                                                            size="xs" icon="x-circle"
+                                                            class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
+                                                            Tolak
                                                         </flux:button>
                                                         <!-- Rejected State Actions -->
                                                     @elseif($data_aspirasi->status === 'rejected')
@@ -464,7 +493,7 @@
                                                             Terima
                                                         </flux:button>
                                                         <flux:button
-                                                            wire:click="rejectAspirasi({{ $data_aspirasi->id_aspirasi }})"
+                                                            wire:click="commentReject({{ $data_aspirasi->id_aspirasi }})"
                                                             size="xs" icon="x-circle"
                                                             class="!text-[0.65rem] cursor-pointer text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all hover:scale-[1.02]">
                                                             Tolak

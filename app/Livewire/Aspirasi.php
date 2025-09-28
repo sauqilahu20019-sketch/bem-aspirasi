@@ -109,6 +109,12 @@ class Aspirasi extends Component
         Flux::modal('aspirasi-notes')->show();
     }
 
+    public function commentReject(ModelsAspirasi $aspirasi)
+    {
+        $this->model_aspirasi = $aspirasi;
+        Flux::modal('reject-notes')->show();
+    }
+
     public function commentAspirasi()
     {
         $validated = $this->validate([
@@ -144,10 +150,36 @@ class Aspirasi extends Component
         $this->refreshData();
     }
 
-    public function rejectAspirasi(ModelsAspirasi $aspirasi)
+    public function rejectAspirasi()
     {
-        $aspirasi->update(['status' => 'rejected']);
-        $this->refreshData();
+        $validated = $this->validate([
+            'note' => ['required', 'string', 'max:2000']
+        ]);
+        $validated['aspirasi_id'] = $this->model_aspirasi->id_aspirasi;
+        $validated['oleh'] = Auth::user()->id_user;
+
+        try {
+            AspirasiNote::create($validated);
+            $this->model_aspirasi->update(['status' => 'rejected']);
+
+            Flux::modals()->close();
+            $this->refreshData();
+            $this->dispatch(
+                'alert',
+                type: 'success',
+                title: 'Sukses',
+                text: 'Catatan Tolakan berhasil disimpan!'
+            );
+        } catch (\Exception $e) {
+            Flux::modals()->close();
+            $this->dispatch(
+                'alert',
+                type: 'error',
+                title: 'Error',
+                time: 5000,
+                text: $e->getMessage()
+            );
+        }
     }
 
     public function markAsPending(ModelsAspirasi $aspirasi)

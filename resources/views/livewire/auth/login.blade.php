@@ -51,12 +51,12 @@
                 </button>
             </form>
 
-            <div
+            {{-- <div
                 class="pt-4 text-center text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700">
                 Belum punya akun? <a href="{{ route('register') }}"
                     class="font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300">Daftar
                     sekarang</a>
-            </div>
+            </div> --}}
         </div>
     </div>
 

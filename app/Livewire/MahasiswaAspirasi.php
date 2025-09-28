@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Rules\MaxWords;
 
 class MahasiswaAspirasi extends Component
 {
@@ -51,11 +52,11 @@ class MahasiswaAspirasi extends Component
     {
         $validated = $this->validate([
             'ke_warek' => ['required'],
-            'aspirasi' => ['required', 'string', 'max:3000'],
+            'aspirasi' => ['required', 'string', new MaxWords(250)],
         ], [
             'ke_warek.required' => 'Tujuan aspirasi harus dipilih!',
             'aspirasi.required' => 'Aspirasi harus diisi!',
-            'aspirasi.max' => 'Aspirasi maksimal 3000 karakter',
+            'aspirasi.max' => 'Aspirasi maksimal 250 karakter',
             'aspirasi.string' => 'Aspirasi harus berupa teks!',
         ]);
 
@@ -110,9 +111,18 @@ class MahasiswaAspirasi extends Component
     #[On('delete')]
     public function delete(ModelsAspirasi $id)
     {
-        $id->delete();
-
-        $this->dispatch('alert', type: 'success', title: "Sukses", text: "Aspirasi berhasil dihapus!");
+        try{
+            $id->notes()->delete();
+            $id->delete();
+            $this->dispatch('alert', type: 'success', title: "Sukses", text: "Aspirasi berhasil dihapus!");
+        } catch(\Exception $e){
+            $this->dispatch(
+                'alert',
+                type: 'error',
+                title: 'Kesalahan',
+                text: "Terdapat kesalahan " . $e->getMessage()
+            );
+        }
     }
 
     public function confirmDelete($id)

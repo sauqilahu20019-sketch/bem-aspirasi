@@ -113,14 +113,20 @@
                         <flux:text class="mt-2">Sampaikan aspirasi anda terkait Universitas Annuqayah!.</flux:text>
                     </div>
                     <flux:select wire:model='ke_warek' :invalid="$errors->has('ke_warek')">
-                        <flux:select.option value="">Jabatan Warek</flux:select.option>
+                        {{-- <flux:select.option value="">Jabatan Warek</flux:select.option> --}}
                         @foreach ($data_warek as $warek_data)
                             <flux:select.option value="{{ $warek_data->role->role_name }}">
                                 {{ $warek_data->role->role_name }} -
                                 {{ $warek_data->full_name }}</flux:select.option>
                         @endforeach
                     </flux:select>
-                    <flux:textarea :invalid="$errors->has('aspirasi')" wire:model="aspirasi" label="Aspirasi" />
+                    <div>
+                        <flux:textarea :invalid="$errors->has('aspirasi')" wire:model.live="aspirasi"
+                            label="Aspirasi" />
+                        <small
+                            class="{{ str_word_count($aspirasi) > 250 ? 'text-red-500' : 'text-green-500' }}">{{ str_word_count($aspirasi) }}
+                            kata {{ str_word_count($aspirasi) > 250 ? '(Kata terlalu panjang)' : '' }}</small>
+                    </div>
                     <div class="flex">
                         <flux:spacer />
                         <flux:button type="submit" variant="primary">Simpan</flux:button>
